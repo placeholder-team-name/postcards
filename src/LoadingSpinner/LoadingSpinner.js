@@ -1,6 +1,6 @@
 import Spinner from 'react-loader-spinner';
 
-export const Loading = () => <div><Spinner
+export const LoadingSpinner = () => <div><Spinner
     type="Oval"
     color="#eeeeee"
     height="100"

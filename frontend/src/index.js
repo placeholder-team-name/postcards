@@ -1,9 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import firebase from 'firebase/app';
+import React from "react";
+import ReactDOM from "react-dom";
+import firebase from "firebase/app";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { Router } from "@reach/router";
+
+import SigninPage from "./pages/SignInPage";
+import ExamplePage from "./pages/ExamplePage";
+
+import theme from "./theme";
+import * as serviceWorker from "./serviceWorker";
 
 let firebaseConfig = {
     apiKey: "AIzaSyDh6s4pfA46oy0EGnmRfLkrxSMaaZBYakk",
@@ -17,6 +22,26 @@ let firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+const GlobalStyle = createGlobalStyle`
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'avenir next', avenir, 'helvetica neue', helvetica, ubuntu, roboto, noto, 'segoe ui', arial, sans-serif;
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+`;
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <>
+        <GlobalStyle />
+        <ThemeProvider theme={theme}>
+            <Router>
+                <SigninPage path="/" />
+                <ExamplePage path="/example" />
+            </Router>
+        </ThemeProvider>
+    </>,
+    document.getElementById("root")
+);
+
 serviceWorker.unregister();

@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import firebase from 'firebase/app';
+import React from "react";
+import ReactDOM from "react-dom";
+import firebase from "firebase/app";
+
+import App from "./components/App";
+import * as serviceWorker from "./serviceWorker";
 
 let firebaseConfig = {
     apiKey: "AIzaSyDh6s4pfA46oy0EGnmRfLkrxSMaaZBYakk",
@@ -17,6 +17,5 @@ let firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById("root"));
 serviceWorker.unregister();

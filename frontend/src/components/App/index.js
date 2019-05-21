@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
+import { Flex } from "grid-styled";
+
+import { Heading, Card, Text } from "../globals";
 
 import LoadingSpinner from "../LoadingSpinner";
 import { WriteAndPreviewComponent } from "../WriteAndPreviewComponent/WriteAndPreviewComponent";

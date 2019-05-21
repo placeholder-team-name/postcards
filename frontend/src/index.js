@@ -2,8 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import firebase from "firebase/app";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { Router } from "@reach/router";
 
-import App from "./components/App";
+import SigninPage from "./pages/SignInPage";
+import ExamplePage from "./pages/ExamplePage";
+
 import theme from "./theme";
 import * as serviceWorker from "./serviceWorker";
 
@@ -32,7 +35,10 @@ ReactDOM.render(
     <>
         <GlobalStyle />
         <ThemeProvider theme={theme}>
-            <App />
+            <Router>
+                <SigninPage path="/" />
+                <ExamplePage path="/example" />
+            </Router>
         </ThemeProvider>
     </>,
     document.getElementById("root")

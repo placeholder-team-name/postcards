@@ -6,6 +6,7 @@ const RedirectIfNotSignedIn = ({ auth, to, children }) => {
         return <Redirect to={to} noThrow />
     }
     return <>
+        SIGNED IN
         {children}
     </>
 }

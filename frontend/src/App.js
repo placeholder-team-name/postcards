@@ -16,7 +16,7 @@ function App() {
             if (user) {
                 setAuth(user);
             } else {
-                setAuth(true);
+                setAuth(null);
             }
             setLoading(false);
         });

@@ -2,13 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import firebase from "firebase/app";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
-import { Router } from "@reach/router";
-
-import SigninPage from "./pages/SignInPage";
-import ExamplePage from "./pages/ExamplePage";
-
 import theme from "./theme";
 import * as serviceWorker from "./serviceWorker";
+import App from "./App";
 
 let firebaseConfig = {
     apiKey: "AIzaSyDh6s4pfA46oy0EGnmRfLkrxSMaaZBYakk",
@@ -35,10 +31,7 @@ ReactDOM.render(
     <>
         <GlobalStyle />
         <ThemeProvider theme={theme}>
-            <Router>
-                <SigninPage path="/" />
-                <ExamplePage path="/example" />
-            </Router>
+            <App />
         </ThemeProvider>
     </>,
     document.getElementById("root")

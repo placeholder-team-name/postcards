@@ -9,20 +9,33 @@ const SigninPage = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [redirectToMain, setRedirectToMain] = useState(false);
-    return <>
-        {error && <>ERROR: {error}</>}
-        {redirectToMain && <Redirect from="/auth/signin" to="/" noThrow />}
-        email: <input value={email} onChange={e => setEmail(e.target.value)} />
-        password: <input value={password} onChange={e => setPassword(e.target.value)} />
-        <Button onClick={async () => {
-            try {
-                await firebase.auth().signInWithEmailAndPassword(email, password);
-                setRedirectToMain(true);
-            } catch (e) {
-                setError(e.message);
-            }
-        }}>SUBMIT</Button>
-    </>
-}
+    return (
+        <>
+            {error && <>ERROR: {error}</>}
+            {redirectToMain && <Redirect from="/auth/signin" to="/" noThrow />}
+            email:{" "}
+            <input value={email} onChange={e => setEmail(e.target.value)} />
+            password:{" "}
+            <input
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+            />
+            <Button
+                onClick={async () => {
+                    try {
+                        await firebase
+                            .auth()
+                            .signInWithEmailAndPassword(email, password);
+                        setRedirectToMain(true);
+                    } catch (e) {
+                        setError(e.message);
+                    }
+                }}
+            >
+                SUBMIT
+            </Button>
+        </>
+    );
+};
 
 export default SigninPage;

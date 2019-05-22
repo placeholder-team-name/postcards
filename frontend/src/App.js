@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
-import ExamplePage from "./pages/ExamplePage";
 import LoadingSpinner from "./components/LoadingSpinner";
-import { WriteAndPreviewComponent } from "./components/WriteAndPreviewComponent/WriteAndPreviewComponent";
-import { Router, Redirect } from '@reach/router';
+import { Router } from "@reach/router";
+import SigninPage from "./pages/SigninPage";
+import SignupPage from "./pages/SignupPage";
+import RedirectIfNotSignedIn from "./components/RedirectIfNotSignedIn";
 
 function App() {
     const [auth, setAuth] = useState(null);
@@ -30,7 +31,7 @@ function App() {
                     <Router>
                         <SignupPage path="/signup" />
                         <SigninPage path="/signin" />
-                        <RedirectIfNotSignedIn path="/" auth={auth}>
+                        <RedirectIfNotSignedIn to="/signup" path="/" auth={auth}>
                             <Test path="hithere" />
                         </RedirectIfNotSignedIn>
                     </Router>
@@ -40,22 +41,6 @@ function App() {
     );
 }
 
-const SignupPage = () => {
-    return <>Signup page</>
-}
-
-const SigninPage = () => {
-    return <>Signin page</>
-}
-
-const RedirectIfNotSignedIn = ({ auth, children }) => {
-    if (!auth) {
-        return <Redirect to="/signup" noThrow />
-    }
-    return <>
-        {children}
-    </>
-}
 
 const Test = () => {
     return <>Test</>

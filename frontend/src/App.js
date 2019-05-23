@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
 import LoadingSpinner from "./components/LoadingSpinner";
-import { Router, Redirect } from "@reach/router";
+import { Router } from "@reach/router";
 import SigninPage from "./pages/SigninPage";
 import SignupPage from "./pages/SignupPage";
 import RedirectIfNotSignedIn from "./components/RedirectIfNotSignedIn";
@@ -34,7 +34,11 @@ function App() {
                             <SignupPage path="/signup" />
                             <SigninPage path="/signin" />
                         </RedirectIfSignedIn>
-                        <RedirectIfNotSignedIn to="/auth/signup" path="/" auth={auth}>
+                        <RedirectIfNotSignedIn
+                            to="/auth/signup"
+                            path="/"
+                            auth={auth}
+                        >
                             <Test path="hithere" />
                         </RedirectIfNotSignedIn>
                     </Router>
@@ -45,6 +49,6 @@ function App() {
 }
 
 const Test = () => {
-    return <>Test</>
-}
+    return <>Test</>;
+};
 export default App;

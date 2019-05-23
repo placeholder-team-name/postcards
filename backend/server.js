@@ -8,25 +8,33 @@ const app = express();
 app.use(cors());
 
 app.post('/SendEmail', function (req, res) {
+    let recipients = req.body.recepients;
+    let user = req.body.user;
+
+    if (len(recipients) < 1) {
+        res.status('400').json('Recipients has to contain one or more addresses.');
+    }
     const msg = {
-        to: 'clairekpromo@gmail.com',
-        from: 'test@example.com',
-        subject: 'Postcards from <Name>',
-        text: 'that you have received with Postcards.',
-        html: '<h1>April</h1><p>This was my summary of the month</p><h4>Lunches</h4><p>yummy</p>',
+        to: recipients,
+        from: user.email,
+        subject: 'Postcards from ' + user.name,
+        text: 'This was my month!', // change this text
+        html: req.body.html,
       };
-      sgMail.send(msg).then(() => {
-        console.log("sent email");
+      sgMail.sendMultiple(msg).then(() => {
+          res.status('200').json('Emails sent.');
       })
       .catch(error => {
-        //Log friendly error
-        console.error(error.toString());
-    
         //Extract error msg
         const {message, code, response} = error;
     
         //Extract response msg
         const {headers, body} = response;
+
+        console.log(headers);
+        console.log(body);
+        console.log(message + " "  + code + " " + response);
+        res.status(code).json(message);
       });
 });
 

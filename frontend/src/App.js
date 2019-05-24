@@ -3,10 +3,13 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import LoadingSpinner from "./components/LoadingSpinner";
 import { Router } from "@reach/router";
-import SigninPage from "./pages/SigninPage";
-import SignupPage from "./pages/SignupPage";
+
 import RedirectIfNotSignedIn from "./components/RedirectIfNotSignedIn";
 import RedirectIfSignedIn from "./components/RedirectIfSignedIn";
+import NavBar from "./components/NavBar";
+
+import SigninPage from "./pages/SigninPage";
+import SignupPage from "./pages/SignupPage";
 
 function App() {
     const [auth, setAuth] = useState(null);
@@ -29,6 +32,7 @@ function App() {
             {loading && <LoadingSpinner />}
             {!loading && (
                 <>
+                    <NavBar />
                     <Router>
                         <RedirectIfSignedIn auth={auth} path="/auth">
                             <SignupPage path="/signup" />

@@ -10,6 +10,7 @@ import NavBar from "./components/NavBar";
 
 import SigninPage from "./pages/SigninPage";
 import SignupPage from "./pages/SignupPage";
+import { WriteAndPreviewComponent } from "./components/WriteAndPreviewComponent";
 
 function App() {
     const [auth, setAuth] = useState(null);
@@ -44,6 +45,7 @@ function App() {
                             auth={auth}
                         >
                             <Test path="hithere" />
+                            <WriteAndPreviewComponent path="editor/*" />
                         </RedirectIfNotSignedIn>
                     </Router>
                 </>
@@ -52,7 +54,12 @@ function App() {
     );
 }
 
+/**
+ * TODO: Remove this class, it is just used as a simple thing for the beginning of the application
+ * 
+ */
 const Test = () => {
-    return <>Test</>;
+    return <></>;
+
 };
 export default App;

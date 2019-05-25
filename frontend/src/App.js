@@ -45,7 +45,7 @@ function App() {
                             auth={auth}
                         >
                             <Test path="hithere" />
-                            <WriteAndPreviewComponent path="editor/*" />
+                            <WriteAndPreviewComponent path="editor/*" user={auth} />
                         </RedirectIfNotSignedIn>
                     </Router>
                 </>

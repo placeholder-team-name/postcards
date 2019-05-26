@@ -8,6 +8,7 @@ import RedirectIfNotSignedIn from "./components/RedirectIfNotSignedIn";
 import RedirectIfSignedIn from "./components/RedirectIfSignedIn";
 import NavBar from "./components/NavBar";
 
+import LandingPage from "./pages/LandingPage";
 import SigninPage from "./pages/SigninPage";
 import SignupPage from "./pages/SignupPage";
 import { WriteAndPreviewComponent } from "./components/WriteAndPreviewComponent";
@@ -36,6 +37,7 @@ function App() {
                     <NavBar />
                     <Router>
                         <RedirectIfSignedIn auth={auth} path="/auth">
+                            <LandingPage path="/d" />
                             <SignupPage path="/signup" />
                             <SigninPage path="/signin" />
                         </RedirectIfSignedIn>
@@ -56,10 +58,9 @@ function App() {
 
 /**
  * TODO: Remove this class, it is just used as a simple thing for the beginning of the application
- * 
+ *
  */
 const Test = () => {
     return <></>;
-
 };
 export default App;

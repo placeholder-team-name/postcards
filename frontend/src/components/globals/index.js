@@ -30,7 +30,8 @@ import {
     backgroundPosition,
     backgroundRepeat,
     opacity,
-    variant
+    variant,
+    maxWidth
 } from "styled-system";
 
 const themed = key => props => props.theme[key];
@@ -40,6 +41,7 @@ export const Box = styled("div")(
         boxSizing: "border-box"
     },
     space,
+    boxShadow,
     width,
     fontSize,
     color,
@@ -51,6 +53,7 @@ export const Box = styled("div")(
 
 Box.propTypes = {
     ...space.propTypes,
+    ...boxShadow.propTypes,
     ...width.propTypes,
     ...fontSize.propTypes,
     ...color.propTypes,
@@ -83,6 +86,7 @@ export const Text = styled(Box)(
     textAlign,
     lineHeight,
     letterSpacing,
+    maxWidth,
     themed("Text")
 );
 
@@ -91,7 +95,12 @@ Text.propTypes = {
     ...fontWeight.propTypes,
     ...textAlign.propTypes,
     ...lineHeight.propTypes,
-    ...letterSpacing.propTypes
+    ...letterSpacing.propTypes,
+    ...maxWidth.propTypes
+};
+
+Text.defaultProps = {
+    as: "p"
 };
 
 export const Heading = styled(Text)(themed("Heading"));
@@ -194,4 +203,19 @@ Card.propTypes = {
     ...backgroundRepeat.propTypes,
     ...opacity.propTypes,
     ...cards.propTypes
+};
+
+export const Container = styled(Box)({
+    maxWidth: "1024px"
+});
+
+Container.defaultProps = {
+    mx: "auto",
+    px: 3
+};
+
+export const Measure = styled(Text);
+
+Measure.defaultProps = {
+    maxWidth: "30em"
 };

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Text, Container } from "../globals";
+import { Box, Text } from "../globals";
 
 const NavBar = () => {
     return (

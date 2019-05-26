@@ -48,6 +48,7 @@ export const Box = styled("div")(
     flex,
     order,
     alignSelf,
+    maxWidth,
     themed("Box")
 );
 
@@ -59,7 +60,8 @@ Box.propTypes = {
     ...color.propTypes,
     ...flex.propTypes,
     ...order.propTypes,
-    ...alignSelf.propTypes
+    ...alignSelf.propTypes,
+    ...maxWidth.propTypes
 };
 
 export const Flex = styled(Box)(
@@ -109,7 +111,8 @@ Heading.defaultProps = {
     as: "h2",
     m: 0,
     fontSize: 4,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    lineHeight: 1.25
 };
 
 export const Link = styled(Box)(themed("Link"));
@@ -211,11 +214,11 @@ export const Container = styled(Box)({
 
 Container.defaultProps = {
     mx: "auto",
-    px: 3
+    px: 6
 };
 
-export const Measure = styled(Text);
+export const Measure = styled(Box)({});
 
 Measure.defaultProps = {
-    maxWidth: "30em"
+    maxWidth: "30rem"
 };

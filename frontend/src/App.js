@@ -3,10 +3,15 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import LoadingSpinner from "./components/LoadingSpinner";
 import { Router } from "@reach/router";
-import SigninPage from "./pages/SigninPage";
-import SignupPage from "./pages/SignupPage";
+
 import RedirectIfNotSignedIn from "./components/RedirectIfNotSignedIn";
 import RedirectIfSignedIn from "./components/RedirectIfSignedIn";
+import NavBar from "./components/NavBar";
+
+import LandingPage from "./pages/LandingPage";
+import SigninPage from "./pages/SigninPage";
+import SignupPage from "./pages/SignupPage";
+import { WriteAndPreviewComponent } from "./components/WriteAndPreviewComponent";
 
 function App() {
     const [auth, setAuth] = useState(null);
@@ -29,8 +34,10 @@ function App() {
             {loading && <LoadingSpinner />}
             {!loading && (
                 <>
+                    <NavBar />
                     <Router>
                         <RedirectIfSignedIn auth={auth} path="/auth">
+                            <LandingPage path="/d" />
                             <SignupPage path="/signup" />
                             <SigninPage path="/signin" />
                         </RedirectIfSignedIn>
@@ -40,6 +47,7 @@ function App() {
                             auth={auth}
                         >
                             <Test path="hithere" />
+                            <WriteAndPreviewComponent path="editor/*" />
                         </RedirectIfNotSignedIn>
                     </Router>
                 </>
@@ -48,7 +56,11 @@ function App() {
     );
 }
 
+/**
+ * TODO: Remove this class, it is just used as a simple thing for the beginning of the application
+ *
+ */
 const Test = () => {
-    return <>Test</>;
+    return <></>;
 };
 export default App;

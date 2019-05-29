@@ -31,7 +31,7 @@ export const WriteAndPreviewComponent = ({ user }) => {
         return () => {
             notebookRef.off();
         }
-    }, [])
+    }, [month, user, year])
 
 
     return <>

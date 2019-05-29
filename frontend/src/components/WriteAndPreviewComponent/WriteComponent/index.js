@@ -6,6 +6,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { Button } from '../../globals';
 import firebase from 'firebase/app';
 import 'firebase/database';
+import 'firebase/storage';
 import ErrorContent from '../../ErrorContent';
 
 export const WriteComponent = ({ user, userNotebookContent, setUserNotebookContent, year, month }) => {
@@ -37,15 +38,18 @@ export const WriteComponent = ({ user, userNotebookContent, setUserNotebookConte
             toolbar={
                 {
                     image: {
-                        uploadCallback: async(file) => {
-                            console.log(file);
-                            // TODO: 
-
-                            if (file && file.size < 10000000) {
-
+                        previewImage: true,
+                        uploadCallback: async (file) => {
+                            if (file && file.size < 10000000) { // is 10 MB
+                                let imageRefUrl = `${user.uid}/${Date.now()}/${file.name}`
+                                let storageRef = firebase.storage().ref(imageRefUrl);
+                                const snap = await storageRef.put(file);
+                                const downloadUrl = await snap.ref.getDownloadURL();
+                                console.log(downloadUrl);
+                                return { data: { link: downloadUrl } };
                             } else {
-                                setErrorSaving("Failed to upload image: Image too large!")
-                                return {}
+                                setErrorSaving("Failed to upload image: Image too large!");
+                                throw new Error("Failed to upload image");
                             }
                         }
                     }

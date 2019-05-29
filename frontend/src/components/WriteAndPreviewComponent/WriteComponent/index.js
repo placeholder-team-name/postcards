@@ -25,7 +25,16 @@ export const WriteComponent = ({ user, userNotebookContent, setUserNotebookConte
 
     return <>
         <Editor editorState={userNotebookContent}
-            onEditorStateChange={(e) => setUserNotebookContent(e)} />
+            onEditorStateChange={(e) => setUserNotebookContent(e)}
+            toolbar={
+                {
+                    image: {
+                        uploadCallback: () => {
+                            // TODO: 
+                        }
+                    }
+                }
+            } />
         <Button onClick={(e) => {
             sendUserNotebookContentToFirebase();
         }}>Test</Button>

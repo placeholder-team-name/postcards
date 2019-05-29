@@ -26,8 +26,12 @@ export const WriteAndPreviewComponent = ({ user }) => {
                 blocksFromHTML.entityMap
             );
             setUserNotebookContent(EditorState.createWithContent(state));
-        })
-    })
+        });
+
+        return () => {
+            notebookRef.off();
+        }
+    }, [])
 
 
     return <>

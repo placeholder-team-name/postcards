@@ -6,6 +6,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { Button } from '../../globals';
 import firebase from 'firebase/app';
 import 'firebase/database';
+import ErrorContent from '../../ErrorContent';
 
 export const WriteComponent = ({ user, userNotebookContent, setUserNotebookContent, year, month }) => {
     const [savedLatestDataToFirebase, setSavedLatestDataToFirebase] = useState(true);
@@ -25,6 +26,7 @@ export const WriteComponent = ({ user, userNotebookContent, setUserNotebookConte
     }
 
     return <>
+        <ErrorContent errorMessage={errorSaving} />
         <Editor editorState={userNotebookContent}
             onEditorStateChange={(e) => {
                 if (savedLatestDataToFirebase) {

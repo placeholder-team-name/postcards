@@ -37,8 +37,16 @@ export const WriteComponent = ({ user, userNotebookContent, setUserNotebookConte
             toolbar={
                 {
                     image: {
-                        uploadCallback: () => {
+                        uploadCallback: async(file) => {
+                            console.log(file);
                             // TODO: 
+
+                            if (file && file.size < 10000000) {
+
+                            } else {
+                                setErrorSaving("Failed to upload image: Image too large!")
+                                return {}
+                            }
                         }
                     }
                 }

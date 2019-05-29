@@ -1,33 +1,59 @@
 const express = require('express');
 const cors = require('cors');
+var bodyParser = require('body-parser');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const app = express();
 
 app.use(cors());
+app.use(express.json());
 
 app.post('/SendEmail', function (req, res) {
-    const msg = {
-        to: 'clairekpromo@gmail.com',
-        from: 'test@example.com',
-        subject: 'Postcards from <Name>',
-        text: 'that you have received with Postcards.',
-        html: '<h1>April</h1><p>This was my summary of the month</p><h4>Lunches</h4><p>yummy</p>',
+    if (req.body == null || req.body == undefined) {
+        return res.json({
+            status: 400,
+            message: 'Request body cannot be empty'
+        });
+    }
+    let recipients = req.body.recipients;
+    let user = req.body.user;
+    
+    if (recipients.length < 1) {
+        return rres.json({
+            status: 400,
+            message:'Recipients have to contain one or more addresses.'
+        });
+    }
+    const msg = {   
+        personalizations: [],
+        subject: 'Postcards from ' + user.name,
+        text: 'This was my month!', // change this text
+        html: req.body.html,
+        from: user
       };
-      sgMail.send(msg).then(() => {
-        console.log("sent email");
-      })
-      .catch(error => {
-        //Log friendly error
-        console.error(error.toString());
-    
-        //Extract error msg
-        const {message, code, response} = error;
-    
-        //Extract response msg
-        const {headers, body} = response;
-      });
+    recipients.map(recipient => {
+        msg.personalizations.push({to: [recipient]});
+    });
+        
+    sgMail.sendMultiple(msg).then(() => {
+        return res.json({
+            status: 200,
+            message: 'Emails sent.'
+        });
+    })
+    .catch(error => {
+    //Extract error msg
+    const {message, code, response} = error;
+    //Extract response msg
+    const {headers, body} = response;
+
+    return res.json({
+        status: code,
+        message: message,
+        errors: body
+    });
+    });
 });
 
 app.listen(3000, () => 

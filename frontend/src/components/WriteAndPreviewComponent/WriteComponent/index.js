@@ -7,16 +7,13 @@ import { Button } from '../../globals';
 import firebase from 'firebase/app';
 import 'firebase/database';
 
-export const WriteComponent = ({ user, userNotebookContent, setUserNotebookContent }) => {
+export const WriteComponent = ({ user, userNotebookContent, setUserNotebookContent, year, month }) => {
     const [savedLatestDataToFirebase, setSavedLatestDateToFirebase] = useState(true);
     const [errorSaving, setErrorSaving] = useState("");
 
     const sendUserNotebookContentToFirebase = async () => {
         try {
             let convertedToHtml = draftToHtml(convertToRaw(userNotebookContent.getCurrentContent()));
-            const currentTime = new Date();
-            const year = currentTime.getYear() + 1900;
-            const month = currentTime.getMonth();
             const notebookRef = firebase.database().ref(`${user.uid}/${year}/${month}`);
             await notebookRef.set(convertedToHtml);
             setErrorSaving("");

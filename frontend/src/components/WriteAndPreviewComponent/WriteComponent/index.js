@@ -8,7 +8,7 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 
 export const WriteComponent = ({ user, userNotebookContent, setUserNotebookContent, year, month }) => {
-    const [savedLatestDataToFirebase, setSavedLatestDateToFirebase] = useState(true);
+    const [savedLatestDataToFirebase, setSavedLatestDataToFirebase] = useState(true);
     const [errorSaving, setErrorSaving] = useState("");
 
     const sendUserNotebookContentToFirebase = async () => {
@@ -17,6 +17,7 @@ export const WriteComponent = ({ user, userNotebookContent, setUserNotebookConte
             const notebookRef = firebase.database().ref(`${user.uid}/${year}/${month}`);
             await notebookRef.set(convertedToHtml);
             setErrorSaving("");
+            setSavedLatestDataToFirebase(true);
         }
         catch (e) {
             setErrorSaving(e.message);
@@ -25,7 +26,12 @@ export const WriteComponent = ({ user, userNotebookContent, setUserNotebookConte
 
     return <>
         <Editor editorState={userNotebookContent}
-            onEditorStateChange={(e) => setUserNotebookContent(e)}
+            onEditorStateChange={(e) => {
+                if (savedLatestDataToFirebase) {
+                    setSavedLatestDataToFirebase(false);
+                }
+                setUserNotebookContent(e);
+            }}
             toolbar={
                 {
                     image: {
@@ -35,7 +41,7 @@ export const WriteComponent = ({ user, userNotebookContent, setUserNotebookConte
                     }
                 }
             } />
-        <Button onClick={(e) => {
+        <Button disabled={savedLatestDataToFirebase} onClick={(e) => {
             sendUserNotebookContentToFirebase();
         }}>Test</Button>
     </>

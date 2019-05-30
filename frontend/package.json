@@ -5,6 +5,7 @@
     "dependencies": {
         "@reach/router": "^1.2.1",
         "draft-js": "^0.10.5",
+        "draftjs-to-html": "^0.8.4",
         "firebase": "^6.0.2",
         "grid-styled": "^5.0.2",
         "immutable": "^4.0.0-rc.12",

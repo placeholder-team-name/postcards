@@ -9,6 +9,7 @@ import 'firebase/database';
 import 'firebase/storage';
 import ErrorContent from '../../ErrorContent';
 import WritePrompt from '../WritePrompt';
+import { Link } from '@reach/router';
 
 export const WriteComponent = ({ user, userNotebookContent, setUserNotebookContent, year, month, currentTime }) => {
     const [savedLatestDataToFirebase, setSavedLatestDataToFirebase] = useState(true);
@@ -29,6 +30,7 @@ export const WriteComponent = ({ user, userNotebookContent, setUserNotebookConte
 
     return <>
         <ErrorContent errorMessage={errorSaving} />
+        <Link to="/editor/preview"><Button>Preview</Button></Link>
         <WritePrompt currentTime={currentTime} year={year} month={month} />
         <Editor editorState={userNotebookContent}
             onEditorStateChange={(e) => {

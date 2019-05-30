@@ -1,10 +1,16 @@
 import React from "react";
 
+import { Container, Box, Text } from "../globals";
+
 const NavBar = () => {
     return (
-        <div>
-            <div>Currently just for signed in users</div>
-        </div>
+        <Box boxShadow="low" py={4}>
+            <Container>
+                <Text as="span" lineHeight="1" fontWeight="bold">
+                    Postcards
+                </Text>
+            </Container>
+        </Box>
     );
 };
 

@@ -30,7 +30,8 @@ import {
     backgroundPosition,
     backgroundRepeat,
     opacity,
-    variant
+    variant,
+    maxWidth
 } from "styled-system";
 
 const themed = key => props => props.theme[key];
@@ -40,23 +41,27 @@ export const Box = styled("div")(
         boxSizing: "border-box"
     },
     space,
+    boxShadow,
     width,
     fontSize,
     color,
     flex,
     order,
     alignSelf,
+    maxWidth,
     themed("Box")
 );
 
 Box.propTypes = {
     ...space.propTypes,
+    ...boxShadow.propTypes,
     ...width.propTypes,
     ...fontSize.propTypes,
     ...color.propTypes,
     ...flex.propTypes,
     ...order.propTypes,
-    ...alignSelf.propTypes
+    ...alignSelf.propTypes,
+    ...maxWidth.propTypes
 };
 
 export const Flex = styled(Box)(
@@ -83,6 +88,7 @@ export const Text = styled(Box)(
     textAlign,
     lineHeight,
     letterSpacing,
+    maxWidth,
     themed("Text")
 );
 
@@ -91,7 +97,12 @@ Text.propTypes = {
     ...fontWeight.propTypes,
     ...textAlign.propTypes,
     ...lineHeight.propTypes,
-    ...letterSpacing.propTypes
+    ...letterSpacing.propTypes,
+    ...maxWidth.propTypes
+};
+
+Text.defaultProps = {
+    as: "p"
 };
 
 export const Heading = styled(Text)(themed("Heading"));
@@ -100,7 +111,8 @@ Heading.defaultProps = {
     as: "h2",
     m: 0,
     fontSize: 4,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    lineHeight: 1.25
 };
 
 export const Link = styled(Box)(themed("Link"));
@@ -194,4 +206,19 @@ Card.propTypes = {
     ...backgroundRepeat.propTypes,
     ...opacity.propTypes,
     ...cards.propTypes
+};
+
+export const Container = styled(Box)({
+    maxWidth: "1024px"
+});
+
+Container.defaultProps = {
+    mx: "auto",
+    px: 6
+};
+
+export const Measure = styled(Box)({});
+
+Measure.defaultProps = {
+    maxWidth: "30rem"
 };

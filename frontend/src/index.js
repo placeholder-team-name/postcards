@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import firebase from "firebase/app";
+import { Helmet } from "react-helmet";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
+
 import theme from "./theme";
 import * as serviceWorker from "./serviceWorker";
 import App from "./App";
@@ -30,6 +32,10 @@ const GlobalStyle = createGlobalStyle`
 ReactDOM.render(
     <>
         <GlobalStyle />
+        <Helmet>
+            <meta charSet="utf-8" />
+            <title>Postcards</title>
+        </Helmet>
         <ThemeProvider theme={theme}>
             <App />
         </ThemeProvider>

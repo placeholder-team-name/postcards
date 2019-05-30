@@ -49,7 +49,6 @@ export const WriteComponent = ({ user, userNotebookContent, setUserNotebookConte
                                 let storageRef = firebase.storage().ref(imageRefUrl);
                                 const snap = await storageRef.put(file);
                                 const downloadUrl = await snap.ref.getDownloadURL();
-                                console.log(downloadUrl);
 
                                 // the uploadcallback expects this object shape to be returned
                                 return { data: { link: downloadUrl } };

@@ -8,8 +8,9 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/storage';
 import ErrorContent from '../../ErrorContent';
+import WritePrompt from '../WritePrompt';
 
-export const WriteComponent = ({ user, userNotebookContent, setUserNotebookContent, year, month }) => {
+export const WriteComponent = ({ user, userNotebookContent, setUserNotebookContent, year, month, currentTime }) => {
     const [savedLatestDataToFirebase, setSavedLatestDataToFirebase] = useState(true);
     const [errorSaving, setErrorSaving] = useState("");
 
@@ -28,6 +29,7 @@ export const WriteComponent = ({ user, userNotebookContent, setUserNotebookConte
 
     return <>
         <ErrorContent errorMessage={errorSaving} />
+        <WritePrompt currentTime={currentTime} year={year} month={month} />
         <Editor editorState={userNotebookContent}
             onEditorStateChange={(e) => {
                 if (savedLatestDataToFirebase) {
@@ -40,12 +42,14 @@ export const WriteComponent = ({ user, userNotebookContent, setUserNotebookConte
                     image: {
                         previewImage: true,
                         uploadCallback: async (file) => {
-                            if (file && file.size < 10000000) { // is 10 MB
+                            if (file && file.size < 10000000) { // is 10 MB == 10 million bytes
                                 let imageRefUrl = `${user.uid}/${Date.now()}/${file.name}`
                                 let storageRef = firebase.storage().ref(imageRefUrl);
                                 const snap = await storageRef.put(file);
                                 const downloadUrl = await snap.ref.getDownloadURL();
                                 console.log(downloadUrl);
+
+                                // the uploadcallback expects this object shape to be returned
                                 return { data: { link: downloadUrl } };
                             } else {
                                 setErrorSaving("Failed to upload image: Image too large!");

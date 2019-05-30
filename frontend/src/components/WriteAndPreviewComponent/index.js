@@ -9,6 +9,7 @@ import LoadingSpinner from '../LoadingSpinner';
 
 export const WriteAndPreviewComponent = ({ user }) => {
     const [userNotebookContent, setUserNotebookContent] = useState(EditorState.createEmpty());
+    const [HTMLContent, setHTMLContent] = useState("");
     const [loading, setLoading] = useState(true);
 
     const currentTime = new Date();
@@ -19,11 +20,15 @@ export const WriteAndPreviewComponent = ({ user }) => {
         const notebookRef = firebase.database().ref(`${user.uid}/${year}/${month}`);
         notebookRef.on('value', (snap) => {
             let notebookContent = snap.val() || "";
+
+            // boilerplate code to generate the editor state from a string
+            // then store it into state
             const blocksFromHTML = convertFromHTML(notebookContent);
             const state = ContentState.createFromBlockArray(
                 blocksFromHTML.contentBlocks,
                 blocksFromHTML.entityMap
             );
+            setHTMLContent(notebookContent);
             setUserNotebookContent(EditorState.createWithContent(state));
             setLoading(false);
         });
@@ -43,8 +48,10 @@ export const WriteAndPreviewComponent = ({ user }) => {
                     userNotebookContent={userNotebookContent}
                     setUserNotebookContent={setUserNotebookContent}
                     year={year}
-                    month={month} />
-                <PreviewComponent path="preview" />
+                    month={month} 
+                    currentTime={currentTime}/>
+                <PreviewComponent path="preview"
+                    HTMLContent={HTMLContent} />
             </Router>
         }
     </>

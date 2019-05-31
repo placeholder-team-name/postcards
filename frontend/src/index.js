@@ -1,64 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import firebase from "firebase/app";
 import { Helmet } from "react-helmet";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 
 import theme from "./theme";
 import * as serviceWorker from "./serviceWorker";
 import App from "./App";
-
-let firebaseConfig = {
-    apiKey: "AIzaSyDh6s4pfA46oy0EGnmRfLkrxSMaaZBYakk",
-    authDomain: "info442-postcards.firebaseapp.com",
-    databaseURL: "https://info442-postcards.firebaseio.com",
-    projectId: "info442-postcards",
-    storageBucket: "info442-postcards.appspot.com",
-    messagingSenderId: "497984830688",
-    appId: "1:497984830688:web:2767b299566f8967"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
-const messaging = firebase.messaging();
-messaging.usePublicVapidKey(
-    "BDF8fVckCf8k3R5-KJX1Xxcqw3qzuKJssbDIvqJ85ktKVF2BAL5bbuciapNAIW2HTcT99eAedUURFqxJrBWtIdQ"
-);
-
-// Callback fired if Instance ID token is updated.
-messaging.onTokenRefresh(function() {
-    messaging
-        .getToken()
-        .then(function(refreshedToken) {
-            console.log("Token refreshed.");
-            // Indicate that the new Instance ID token has not yet been sent to the
-            // app server.
-            // setTokenSentToServer(false);
-            // Send Instance ID token to app server.
-            // sendTokenToServer(refreshedToken);
-            // Display new Instance ID token and clear UI of all previous messages.
-            // resetUI();
-        })
-        .catch(function(err) {
-            console.log("Unable to retrieve refreshed token ", err);
-            // showToken("Unable to retrieve refreshed token ", err);
-        });
-});
-
-function requestPermission() {
-    console.log("Requesting permission...");
-    Notification.requestPermission().then(function(permission) {
-        if (permission === "granted") {
-            console.log("Notification permission granted.");
-            // TODO(developer): Retrieve an Instance ID token for use with FCM.
-            // In many cases once an app has been granted notification permission,
-            // it should update its UI reflecting this.
-            // resetUI();
-        } else {
-            console.log("Unable to get permission to notify.");
-        }
-    });
-}
+import "./firebase";
 
 const GlobalStyle = createGlobalStyle`
     body {

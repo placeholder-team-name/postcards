@@ -20,6 +20,46 @@ let firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+const messaging = firebase.messaging();
+messaging.usePublicVapidKey(
+    "BDF8fVckCf8k3R5-KJX1Xxcqw3qzuKJssbDIvqJ85ktKVF2BAL5bbuciapNAIW2HTcT99eAedUURFqxJrBWtIdQ"
+);
+
+// Callback fired if Instance ID token is updated.
+messaging.onTokenRefresh(function() {
+    messaging
+        .getToken()
+        .then(function(refreshedToken) {
+            console.log("Token refreshed.");
+            // Indicate that the new Instance ID token has not yet been sent to the
+            // app server.
+            // setTokenSentToServer(false);
+            // Send Instance ID token to app server.
+            // sendTokenToServer(refreshedToken);
+            // Display new Instance ID token and clear UI of all previous messages.
+            // resetUI();
+        })
+        .catch(function(err) {
+            console.log("Unable to retrieve refreshed token ", err);
+            // showToken("Unable to retrieve refreshed token ", err);
+        });
+});
+
+function requestPermission() {
+    console.log("Requesting permission...");
+    Notification.requestPermission().then(function(permission) {
+        if (permission === "granted") {
+            console.log("Notification permission granted.");
+            // TODO(developer): Retrieve an Instance ID token for use with FCM.
+            // In many cases once an app has been granted notification permission,
+            // it should update its UI reflecting this.
+            // resetUI();
+        } else {
+            console.log("Unable to get permission to notify.");
+        }
+    });
+}
+
 const GlobalStyle = createGlobalStyle`
     body {
         font-family: -apple-system, BlinkMacSystemFont, 'avenir next', avenir, 'helvetica neue', helvetica, ubuntu, roboto, noto, 'segoe ui', arial, sans-serif;

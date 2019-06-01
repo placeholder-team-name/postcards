@@ -1,10 +1,10 @@
 import React from "react";
-import { firebase } from "../../firebase";
+import { firebase, db } from "../../firebase";
 import { navigate } from "@reach/router";
 
 import { Container, Button, Heading } from "../../components/globals";
 
-const SettingsPage = () => {
+const SettingsPage = ({ user }) => {
     function handleSignOut() {
         firebase
             .auth()

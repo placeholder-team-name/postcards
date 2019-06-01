@@ -1,6 +1,14 @@
 const express = require("express");
 const cors = require("cors");
+const admin = require("firebase-admin");
 const sgMail = require("@sendgrid/mail");
+const serviceAccount = require("./serviceAccountKey.json");
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://info442-postcards.firebaseio.com"
+});
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const app = express();

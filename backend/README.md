@@ -1,6 +1,6 @@
 # backend
 
-Start backend with `npm run dev`
+Generate a new private key by going to https://console.firebase.google.com/u/0/project/info442-postcards/settings/serviceaccounts/adminsdk and save it as `serviceAccountKey.json`. Run backend with `npm run dev`.
 
 ## Endpoints
 

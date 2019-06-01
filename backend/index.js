@@ -4,17 +4,64 @@ const admin = require("firebase-admin");
 const sgMail = require("@sendgrid/mail");
 const serviceAccount = require("./serviceAccountKey.json");
 
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://info442-postcards.firebaseio.com"
 });
-
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
+const db = admin.database();
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+// TODO: Change this from once every minute to something
+// more realistic
+cron.schedule("*/1 * * * *", () => {
+    db.ref(`push-notification-tokens`)
+        .once("value")
+        .then(function(snapshot) {
+            if (snapshot) {
+                let receivers = [];
+
+                snapshot = snapshot.val();
+                for (let uid in snapshot) {
+                    const tokens = snapshot[uid];
+                    for (let token in tokens) {
+                        if (tokens[token]) {
+                            receivers = [...receivers, token];
+                        }
+                    }
+                }
+
+                const message = {
+                    notification: {
+                        title: "Wow!",
+                        body: "Ghehhehehe"
+                    },
+                    tokens: receivers
+                };
+
+                // TODO: Take into account 100 device token limit
+                admin
+                    .messaging()
+                    .sendMulticast(message)
+                    .then(response => {
+                        if (response.failureCount > 0) {
+                            const failedTokens = [];
+                            response.responses.forEach((resp, idx) => {
+                                if (!resp.success) {
+                                    failedTokens.push(receivers[idx]);
+                                }
+                            });
+                            // TODO: Log failedTokens
+                            // Perhaps set them to `false` in DB?
+                        }
+                    });
+            }
+        });
+});
 
 app.post("/SendEmail", function(req, res) {
     if (req.body == null || req.body == undefined) {

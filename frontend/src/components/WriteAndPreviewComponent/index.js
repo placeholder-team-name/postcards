@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { WriteComponent } from './WriteComponent';
-import { Router } from '@reach/router';
-import { EditorState, convertFromHTML, ContentState } from 'draft-js';
-import { PreviewComponent } from './PreviewComponent';
-import firebase from 'firebase/app';
-import 'firebase/database';
-import LoadingSpinner from '../LoadingSpinner';
+import React, { useState, useEffect } from "react";
+import { WriteComponent } from "./WriteComponent";
+import { Router } from "@reach/router";
+import { EditorState, convertFromHTML, ContentState } from "draft-js";
+import { PreviewComponent } from "./PreviewComponent";
+import firebase from "firebase/app";
+import "firebase/database";
+import LoadingSpinner from "../LoadingSpinner";
 
-export const WriteAndPreviewComponent = ({ user }) => {
-    const [userNotebookContent, setUserNotebookContent] = useState(EditorState.createEmpty());
+const WriteAndPreviewComponent = ({ user }) => {
+    const [userNotebookContent, setUserNotebookContent] = useState(
+        EditorState.createEmpty()
+    );
     const [HTMLContent, setHTMLContent] = useState("");
     const [loading, setLoading] = useState(true);
 
@@ -17,42 +19,61 @@ export const WriteAndPreviewComponent = ({ user }) => {
     const month = currentTime.getMonth();
 
     useEffect(() => {
-        const notebookRef = firebase.database().ref(`${user.uid}/${year}/${month}`);
-        notebookRef.on('value', (snap) => {
-            let notebookContent = snap.val() || "";
+        const notebookRef = firebase
+            .database()
+            .ref(`${user.uid}/${year}/${month}`);
+        notebookRef.on("value", snap => {
+            const notebookContent = snap.val() || "";
+            // default editor state to empty
+            let editorState = EditorState.createEmpty();
 
-            // boilerplate code to generate the editor state from a string
-            // then store it into state
-            const blocksFromHTML = convertFromHTML(notebookContent);
-            const state = ContentState.createFromBlockArray(
-                blocksFromHTML.contentBlocks,
-                blocksFromHTML.entityMap
+            const { contentBlocks, entityMap } = convertFromHTML(
+                notebookContent
             );
+
+            if (contentBlocks) {
+                // boilerplate code to generate the editor state from a string
+                // then store it into state
+                const contentState = ContentState.createFromBlockArray(
+                    contentBlocks,
+                    entityMap
+                );
+                // replace default editor state with actual state
+                editorState = EditorState.createWithContent(contentState);
+            }
+
             setHTMLContent(notebookContent);
-            setUserNotebookContent(EditorState.createWithContent(state));
+            setUserNotebookContent(editorState);
             setLoading(false);
         });
 
         return () => {
             notebookRef.off();
-        }
-    }, [month, user, year])
+        };
+    }, [month, user, year]);
 
+    return (
+        <>
+            {loading && <LoadingSpinner />}
+            {!loading && (
+                <Router>
+                    <WriteComponent
+                        path="write"
+                        user={user}
+                        userNotebookContent={userNotebookContent}
+                        setUserNotebookContent={setUserNotebookContent}
+                        year={year}
+                        month={month}
+                        currentTime={currentTime}
+                    />
+                    <PreviewComponent
+                        path="preview"
+                        HTMLContent={HTMLContent}
+                    />
+                </Router>
+            )}
+        </>
+    );
+};
 
-    return <>
-        {loading && <LoadingSpinner />}
-        {!loading &&
-            <Router>
-                <WriteComponent path="write"
-                    user={user}
-                    userNotebookContent={userNotebookContent}
-                    setUserNotebookContent={setUserNotebookContent}
-                    year={year}
-                    month={month} 
-                    currentTime={currentTime}/>
-                <PreviewComponent path="preview"
-                    HTMLContent={HTMLContent} />
-            </Router>
-        }
-    </>
-}
+export default WriteAndPreviewComponent;

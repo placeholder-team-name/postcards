@@ -14,9 +14,11 @@ const config = {
 };
 firebase.initializeApp(config);
 
+const db = firebase.database();
+
 const messaging = firebase.messaging();
 messaging.usePublicVapidKey(
     "BDF8fVckCf8k3R5-KJX1Xxcqw3qzuKJssbDIvqJ85ktKVF2BAL5bbuciapNAIW2HTcT99eAedUURFqxJrBWtIdQ"
 );
 
-export { firebase, messaging };
+export { firebase, db, messaging };

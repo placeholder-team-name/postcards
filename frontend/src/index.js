@@ -1,24 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import firebase from "firebase/app";
 import { Helmet } from "react-helmet";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 
 import theme from "./theme";
 import * as serviceWorker from "./serviceWorker";
 import App from "./App";
-
-let firebaseConfig = {
-    apiKey: "AIzaSyDh6s4pfA46oy0EGnmRfLkrxSMaaZBYakk",
-    authDomain: "info442-postcards.firebaseapp.com",
-    databaseURL: "https://info442-postcards.firebaseio.com",
-    projectId: "info442-postcards",
-    storageBucket: "info442-postcards.appspot.com",
-    messagingSenderId: "497984830688",
-    appId: "1:497984830688:web:2767b299566f8967"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+import "./firebase";
 
 const GlobalStyle = createGlobalStyle`
     body {
@@ -43,4 +31,4 @@ ReactDOM.render(
     document.getElementById("root")
 );
 
-serviceWorker.unregister();
+serviceWorker.register();

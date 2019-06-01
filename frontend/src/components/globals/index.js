@@ -23,6 +23,7 @@ import {
     borders,
     borderColor,
     borderRadius,
+    size,
     buttonStyle,
     boxShadow,
     backgroundImage,
@@ -33,6 +34,7 @@ import {
     variant,
     maxWidth
 } from "styled-system";
+import { Link as ReachLink } from "@reach/router";
 
 const themed = key => props => props.theme[key];
 
@@ -115,11 +117,16 @@ Heading.defaultProps = {
     lineHeight: 1.25
 };
 
-export const Link = styled(Box)(themed("Link"));
+export const Link = styled(Box)(
+    {
+        textDecoration: "none",
+        color: "inherit"
+    },
+    themed("Link")
+);
 
 Link.defaultProps = {
-    as: "a",
-    color: "blue"
+    as: "a"
 };
 
 export const Button = styled(Box)(
@@ -221,4 +228,31 @@ export const Measure = styled(Box)({});
 
 Measure.defaultProps = {
     maxWidth: "30rem"
+};
+
+export const PageLink = styled(ReachLink)({
+    textDecoration: "none",
+    color: "inherit"
+});
+
+export const Avatar = styled("img")(
+    {
+        display: "inline-block"
+    },
+    borderRadius,
+    space,
+    color,
+    size
+);
+
+Avatar.propTypes = {
+    ...borderRadius.propTypes,
+    ...space.propTypes,
+    ...color.propTypes,
+    ...size.propTypes
+};
+
+Avatar.defaultProps = {
+    size: 48,
+    borderRadius: "50%"
 };

@@ -6,6 +6,8 @@ import NavBar from "./components/NavBar";
 import WriteAndPreviewComponent from "./components/WriteAndPreviewComponent";
 import LandingPage from "./pages/LandingPage";
 import PostcardPage from "./pages/PostcardPage";
+import SettingsPage from "./pages/SettingsPage";
+import RecipientsPage from "./pages/RecipientsPage";
 
 import useAuth from "./hooks/useAuth";
 
@@ -18,11 +20,13 @@ function App() {
 
     return (
         <>
-            <NavBar />
+            <NavBar user={user} />
             {user ? (
                 <Router>
                     <PostcardPage path="/" user={user} />
                     <WriteAndPreviewComponent path="/editor/*" user={user} />
+                    <SettingsPage path="/settings" user={user} />
+                    <RecipientsPage path="/recipients" user={user} />
                 </Router>
             ) : (
                 <Router>

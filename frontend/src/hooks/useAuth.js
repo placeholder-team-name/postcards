@@ -15,6 +15,7 @@ function useAuth() {
                 });
             } else {
                 setUser(null);
+                // TODO: Navigate using reach
             }
             setLoading(false);
         });

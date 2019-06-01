@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { WriteComponent } from "./WriteComponent";
-import { Router } from "@reach/router";
-import { EditorState, convertFromHTML, ContentState } from "draft-js";
-import { PreviewComponent } from "./PreviewComponent";
 import firebase from "firebase/app";
 import "firebase/database";
+import { Router } from "@reach/router";
+import { EditorState, convertFromHTML, ContentState } from "draft-js";
+
+import { WriteComponent } from "./WriteComponent";
+import { PreviewComponent } from "./PreviewComponent";
 import LoadingSpinner from "../LoadingSpinner";
+import { Container } from "../globals";
 
 const WriteAndPreviewComponent = ({ user }) => {
     const [userNotebookContent, setUserNotebookContent] = useState(
@@ -53,7 +55,7 @@ const WriteAndPreviewComponent = ({ user }) => {
     }, [month, user, year]);
 
     return (
-        <>
+        <Container>
             {loading && <LoadingSpinner />}
             {!loading && (
                 <Router>
@@ -72,7 +74,7 @@ const WriteAndPreviewComponent = ({ user }) => {
                     />
                 </Router>
             )}
-        </>
+        </Container>
     );
 };
 

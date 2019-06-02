@@ -15,6 +15,7 @@ const WriteAndPreviewComponent = ({ user }) => {
     );
     const [HTMLContent, setHTMLContent] = useState("");
     const [loading, setLoading] = useState(true);
+    const [lastEditedTime, setLastEditedTime] = useState(null);
 
     const currentTime = new Date();
     const year = currentTime.getYear() + 1900;
@@ -25,7 +26,8 @@ const WriteAndPreviewComponent = ({ user }) => {
             .database()
             .ref(`${user.uid}/${year}/${month}`);
         notebookRef.on("value", snap => {
-            const notebookContent = snap.val() || "";
+            const firebaseData = snap.val() || { notebookContent: "" };
+            const { notebookContent, lastEditedTime: lastEditedTimeOnFirebase } = firebaseData;
             // default editor state to empty
             let editorState = EditorState.createEmpty();
 
@@ -43,7 +45,7 @@ const WriteAndPreviewComponent = ({ user }) => {
                 // replace default editor state with actual state
                 editorState = EditorState.createWithContent(contentState);
             }
-
+            setLastEditedTime(new Date(lastEditedTimeOnFirebase));
             setHTMLContent(notebookContent);
             setUserNotebookContent(editorState);
             setLoading(false);
@@ -67,6 +69,7 @@ const WriteAndPreviewComponent = ({ user }) => {
                         year={year}
                         month={month}
                         currentTime={currentTime}
+                        lastEditedTime={lastEditedTime}
                     />
                     <PreviewComponent
                         path="preview"

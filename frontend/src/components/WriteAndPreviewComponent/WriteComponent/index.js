@@ -17,7 +17,8 @@ export const WriteComponent = ({
     setUserNotebookContent,
     year,
     month,
-    currentTime
+    currentTime,
+    lastEditedTime
 }) => {
     const [savedLatestDataToFirebase, setSavedLatestDataToFirebase] = useState(
         true
@@ -32,7 +33,12 @@ export const WriteComponent = ({
             const notebookRef = firebase
                 .database()
                 .ref(`${user.uid}/${year}/${month}`);
-            await notebookRef.set(convertedToHtml);
+            let lastEditedTime = firebase.database.ServerValue.TIMESTAMP;
+            const valueToSet = {
+                notebookContent: convertedToHtml,
+                lastEditedTime
+            }
+            await notebookRef.set(valueToSet);
             setErrorSaving("");
             setSavedLatestDataToFirebase(true);
         } catch (e) {
@@ -46,7 +52,7 @@ export const WriteComponent = ({
             <Link to="/preview">
                 <Button>Preview</Button>
             </Link>
-            <WritePrompt currentTime={currentTime} year={year} month={month} />
+            {(!lastEditedTime || (lastEditedTime.getDate() !== currentTime.getDate())) && <WritePrompt currentTime={currentTime} year={year} month={month} />}
             <Editor
                 editorState={userNotebookContent}
                 onEditorStateChange={e => {
@@ -63,7 +69,7 @@ export const WriteComponent = ({
                                 // is 10 MB == 10 million bytes
                                 let imageRefUrl = `${user.uid}/${Date.now()}/${
                                     file.name
-                                }`;
+                                    }`;
                                 let storageRef = firebase
                                     .storage()
                                     .ref(imageRefUrl);

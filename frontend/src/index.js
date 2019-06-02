@@ -29,7 +29,6 @@ const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
         font-size: 16px;
         line-height: 1.5;
-        background-color: #F5F5FA;
         -webkit-font-smoothing: auto;
         -webkit-tap-highlight-color: rgba(0,0,0,0);
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
@@ -46,6 +45,12 @@ const GlobalStyle = createGlobalStyle`
         display: flex;
         flex-direction: column;
         overflow: hidden;
+    }
+
+    .DraftEditor-root {
+        max-width: 48rem;
+        margin-left: auto;
+        margin-right: auto;
     }
 `;
 

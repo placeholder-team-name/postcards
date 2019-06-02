@@ -1,5 +1,5 @@
-import React from 'react';
-import { Prompts } from '../../../constants';
+import React from "react";
+import { Prompts } from "../../../constants";
 
 const WritePrompt = ({ month, currentTime }) => {
     const day = currentTime.getDate();
@@ -17,11 +17,13 @@ const WritePrompt = ({ month, currentTime }) => {
     let monthPrompts = Prompts[month];
     let prompt = monthPrompts[day] || monthPrompts.DEFAULT;
 
-    return <>
-        <div style={{ color: "gray" }}>
-            {timePrompt} {prompt}
-        </div>
-    </>
-}
+    return (
+        <>
+            <div style={{ color: "gray", fontSize: "16px" }}>
+                {timePrompt} {prompt}
+            </div>
+        </>
+    );
+};
 
 export default WritePrompt;

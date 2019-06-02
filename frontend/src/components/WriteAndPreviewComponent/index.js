@@ -64,36 +64,32 @@ const WriteAndPreviewComponent = ({ user }) => {
                 overflowY: "hidden"
             }}
         >
-            <NavBarSecondary />
             <div
                 style={{
-                    overflowY: "auto",
-                    position: "relative",
-                    flex: "1 1 auto"
+                    height: "100vh",
+                    display: "flex",
+                    flexDirection: "column",
+                    overflowY: "hidden"
                 }}
             >
                 {loading && <LoadingSpinner />}
                 {!loading && (
                     <>
-                        <Container>
-                            <Router>
-                                <WriteComponent
-                                    path="/"
-                                    user={user}
-                                    userNotebookContent={userNotebookContent}
-                                    setUserNotebookContent={
-                                        setUserNotebookContent
-                                    }
-                                    year={year}
-                                    month={month}
-                                    currentTime={currentTime}
-                                />
-                                <PreviewComponent
-                                    path="preview"
-                                    HTMLContent={HTMLContent}
-                                />
-                            </Router>
-                        </Container>
+                        <Router>
+                            <WriteComponent
+                                path="/"
+                                user={user}
+                                userNotebookContent={userNotebookContent}
+                                setUserNotebookContent={setUserNotebookContent}
+                                year={year}
+                                month={month}
+                                currentTime={currentTime}
+                            />
+                            <PreviewComponent
+                                path="preview"
+                                HTMLContent={HTMLContent}
+                            />
+                        </Router>
                     </>
                 )}
             </div>

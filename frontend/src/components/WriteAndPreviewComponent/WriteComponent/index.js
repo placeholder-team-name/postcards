@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import draftToHtml from "draftjs-to-html";
 import { convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
@@ -23,6 +23,7 @@ export const WriteComponent = ({
         true
     );
     const [errorSaving, setErrorSaving] = useState("");
+    const [editorRef, setEditorRef] = useState(null);
 
     const sendUserNotebookContentToFirebase = async () => {
         try {
@@ -56,12 +57,26 @@ export const WriteComponent = ({
             >
                 Save
             </Button>
+                        <WritePrompt currentTime={currentTime} year={year} month={month} />
+
             */
+
+    /* TODO: LIFT THIS UP:             <ErrorContent errorMessage={errorSaving} /> */
+
+    const handleEditorRef = ref => {
+        setEditorRef(ref);
+        ref.focus();
+        const LOL = document.createElement("p");
+        LOL.style.fontSize = "20px";
+        LOL.innerHTML =
+            "Good evening! Happy June! Summer is starting! How do you feel about that?";
+        LOL.style.userSelect = "none";
+        LOL.style.color = "#808080";
+        ref.editorContainer.insertBefore(LOL, ref.editorContainer.firstChild);
+    };
+
     return (
         <>
-            <ErrorContent errorMessage={errorSaving} />
-
-            <WritePrompt currentTime={currentTime} year={year} month={month} />
             <Editor
                 editorState={userNotebookContent}
                 onEditorStateChange={e => {
@@ -70,13 +85,33 @@ export const WriteComponent = ({
                     }
                     setUserNotebookContent(e);
                 }}
+                editorRef={handleEditorRef}
                 toolbarStyle={{
                     border: "none",
-                    marginBottom: 0
+                    marginBottom: 0,
+                    position: "relative",
+                    borderTop: "1px solid #EFEFF4",
+                    borderBottom: "1px solid #EFEFF4",
+                    paddingLeft: "20px",
+                    paddingRight: "20px",
+                    paddingTop: "8px",
+                    paddingBottom: "8px"
                 }}
                 editorStyle={{
                     backgroundColor: "white",
-                    minHeight: "50vh"
+                    overflowY: "auto",
+                    position: "relative",
+                    flex: "1 1 auto",
+                    paddingTop: "48px",
+                    paddingBottom: "48px",
+                    paddingLeft: "24px",
+                    paddingRight: "24px"
+                }}
+                wrapperStyle={{
+                    height: "100vh",
+                    display: "flex",
+                    flexDirection: "column",
+                    overflowY: "hidden"
                 }}
                 toolbar={{
                     image: {

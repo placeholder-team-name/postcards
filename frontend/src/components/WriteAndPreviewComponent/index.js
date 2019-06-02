@@ -60,7 +60,7 @@ const WriteAndPreviewComponent = ({ user }) => {
             {!loading && (
                 <Router>
                     <WriteComponent
-                        path="write"
+                        path="/"
                         user={user}
                         userNotebookContent={userNotebookContent}
                         setUserNotebookContent={setUserNotebookContent}

@@ -13,7 +13,7 @@ const RecipientsPage = ({ user }) => {
                     // TODO: Set recipients
                 }
             });
-    }, []);
+    }, [user.uid]);
 
     // TODO: Add proper empty state
     return (

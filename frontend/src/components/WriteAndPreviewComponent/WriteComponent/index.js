@@ -67,12 +67,13 @@ export const WriteComponent = ({
         setEditorRef(ref);
         ref.focus();
         const LOL = document.createElement("p");
-        LOL.style.fontSize = "20px";
-        LOL.innerHTML =
-            "Good evening! Happy June! Summer is starting! How do you feel about that?";
-        LOL.style.userSelect = "none";
-        LOL.style.color = "#808080";
-        ref.editorContainer.insertBefore(LOL, ref.editorContainer.firstChild);
+        LOL.style.fontSize = "24px";
+        LOL.innerHTML = LOL.style.userSelect =
+            "Good evening! Happy June! Summer is starting! How do you feel about?";
+        LOL.style.color = "black";
+        LOL.style.marginBottom = "32px";
+        LOL.style.fontWeight = "#808080";
+        ref.editorContainer.parentNode.insertBefore(LOL, ref.editorContainer);
     };
 
     return (
@@ -98,7 +99,6 @@ export const WriteComponent = ({
                     paddingBottom: "8px"
                 }}
                 editorStyle={{
-                    backgroundColor: "white",
                     overflowY: "auto",
                     position: "relative",
                     flex: "1 1 auto",

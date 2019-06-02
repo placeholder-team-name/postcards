@@ -38,6 +38,7 @@ const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
         width: 100%;
         height: 100%;
+        background-color: #F5F5FA;
     }
 
     #root {
@@ -51,6 +52,12 @@ const GlobalStyle = createGlobalStyle`
         max-width: 48rem;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    .DraftEditor-editorContainer {
+        background-Color: white !important;
+        padding: 48px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
 `;
 

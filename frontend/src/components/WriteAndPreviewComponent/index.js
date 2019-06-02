@@ -6,8 +6,9 @@ import { EditorState, convertFromHTML, ContentState } from "draft-js";
 
 import { WriteComponent } from "./WriteComponent";
 import { PreviewComponent } from "./PreviewComponent";
+import NavBarSecondary from "../NavBarSecondary";
 import LoadingSpinner from "../LoadingSpinner";
-import { Container } from "../globals";
+import { Container, Heading } from "../globals";
 
 const WriteAndPreviewComponent = ({ user }) => {
     const [userNotebookContent, setUserNotebookContent] = useState(
@@ -55,26 +56,48 @@ const WriteAndPreviewComponent = ({ user }) => {
     }, [month, user, year]);
 
     return (
-        <Container>
-            {loading && <LoadingSpinner />}
-            {!loading && (
-                <Router>
-                    <WriteComponent
-                        path="write"
-                        user={user}
-                        userNotebookContent={userNotebookContent}
-                        setUserNotebookContent={setUserNotebookContent}
-                        year={year}
-                        month={month}
-                        currentTime={currentTime}
-                    />
-                    <PreviewComponent
-                        path="preview"
-                        HTMLContent={HTMLContent}
-                    />
-                </Router>
-            )}
-        </Container>
+        <div
+            style={{
+                height: "100vh",
+                display: "flex",
+                flexDirection: "column",
+                overflowY: "hidden"
+            }}
+        >
+            <NavBarSecondary />
+            <div
+                style={{
+                    overflowY: "auto",
+                    position: "relative",
+                    flex: "1 1 auto"
+                }}
+            >
+                {loading && <LoadingSpinner />}
+                {!loading && (
+                    <>
+                        <Container>
+                            <Router>
+                                <WriteComponent
+                                    path="/"
+                                    user={user}
+                                    userNotebookContent={userNotebookContent}
+                                    setUserNotebookContent={
+                                        setUserNotebookContent
+                                    }
+                                    year={year}
+                                    month={month}
+                                    currentTime={currentTime}
+                                />
+                                <PreviewComponent
+                                    path="preview"
+                                    HTMLContent={HTMLContent}
+                                />
+                            </Router>
+                        </Container>
+                    </>
+                )}
+            </div>
+        </div>
     );
 };
 

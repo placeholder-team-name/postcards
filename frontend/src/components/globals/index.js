@@ -32,7 +32,8 @@ import {
     backgroundRepeat,
     opacity,
     variant,
-    maxWidth
+    maxWidth,
+    position
 } from "styled-system";
 import { Link as ReachLink } from "@reach/router";
 
@@ -50,7 +51,9 @@ export const Box = styled("div")(
     flex,
     order,
     alignSelf,
+    borders,
     maxWidth,
+    position,
     themed("Box")
 );
 
@@ -63,7 +66,9 @@ Box.propTypes = {
     ...flex.propTypes,
     ...order.propTypes,
     ...alignSelf.propTypes,
-    ...maxWidth.propTypes
+    ...maxWidth.propTypes,
+    ...borders.propTypes,
+    ...position.propTypes
 };
 
 export const Flex = styled(Box)(

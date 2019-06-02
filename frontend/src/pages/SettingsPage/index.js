@@ -1,5 +1,5 @@
 import React from "react";
-import { firebase, db } from "../../firebase";
+import { firebase } from "../../firebase";
 import { navigate } from "@reach/router";
 
 import { Container, Button, Heading } from "../../components/globals";

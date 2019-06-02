@@ -1,10 +1,10 @@
 import React from "react";
 import { Flex } from "grid-styled";
-import { PageLink, Container, Box, Text, Avatar } from "../globals";
+import { PageLink, Container, Box, Text, Avatar, Button } from "../globals";
 
 const NavBar = ({ user }) => {
     return (
-        <Box boxShadow="low" py={4}>
+        <Box bg="white" boxShadow="low" py={4} position="relative">
             <Container>
                 {user ? (
                     <Flex justifyContent="space-between" alignItems="center">
@@ -17,9 +17,8 @@ const NavBar = ({ user }) => {
                             Postcards
                         </Text>
                         <Flex alignItems="center">
-                            <Text as={PageLink} to="/recipients" lineHeight="1">
-                                Recipients
-                            </Text>
+                            <Button>Save</Button>
+                            <Button>Review</Button>
                             <PageLink to="/settings">
                                 <Avatar src={user.photoURL} size={32} />
                             </PageLink>

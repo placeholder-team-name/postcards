@@ -4,8 +4,8 @@ import { Router } from "@reach/router";
 import LoadingSpinner from "./components/LoadingSpinner";
 import NavBar from "./components/NavBar";
 import WriteAndPreviewComponent from "./components/WriteAndPreviewComponent";
+import { Box } from "./components/globals";
 import LandingPage from "./pages/LandingPage";
-import PostcardPage from "./pages/PostcardPage";
 import SettingsPage from "./pages/SettingsPage";
 import RecipientsPage from "./pages/RecipientsPage";
 
@@ -23,8 +23,7 @@ function App() {
             <NavBar user={user} />
             {user ? (
                 <Router>
-                    <PostcardPage path="/" user={user} />
-                    <WriteAndPreviewComponent path="/editor/*" user={user} />
+                    <WriteAndPreviewComponent path="/*" user={user} />
                     <SettingsPage path="/settings" user={user} />
                     <RecipientsPage path="/recipients" user={user} />
                 </Router>

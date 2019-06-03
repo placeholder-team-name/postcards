@@ -89,7 +89,7 @@ const RecipientsNewPage = ({ user }) => {
                             ) : null}
                         </div>
 
-                        <button type="submit">Submit</button>
+                        <Button type="submit">Submit</Button>
                         {status && status.msg && <div>{status.msg}</div>}
                     </Form>
                 )}

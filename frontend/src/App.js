@@ -16,7 +16,7 @@ function App() {
     const [user, loading] = useAuth();
 
     if (loading) {
-        return <LoadingSpinner />;
+        return <LoadingSpinner type="circle" />;
     }
 
     return (

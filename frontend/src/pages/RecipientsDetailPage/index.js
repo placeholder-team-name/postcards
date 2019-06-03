@@ -10,7 +10,7 @@ const RecipientsDetailPage = ({ user, recipientID }) => {
 
     // TODO: Make sure users can only access their own recipients
     if (loading) {
-        return <LoadingSpinner />;
+        return <LoadingSpinner type="balls" />;
     }
 
     if (recipientsDetail) {

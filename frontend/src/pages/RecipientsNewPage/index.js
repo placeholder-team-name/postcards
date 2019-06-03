@@ -4,7 +4,7 @@ import { navigate } from "@reach/router";
 import * as Yup from "yup";
 import { db } from "../../firebase";
 
-import { Container, Button, PageLink, Heading } from "../../components/globals";
+import { Container, Button, Heading } from "../../components/globals";
 
 const RecipientsNewSchema = Yup.object().shape({
     firstName: Yup.string().required("First name is required"),

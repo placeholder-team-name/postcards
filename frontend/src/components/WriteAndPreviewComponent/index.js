@@ -56,7 +56,7 @@ const WriteAndPreviewComponent = ({ user }) => {
 
     return (
         <Container>
-            {loading && <LoadingSpinner />}
+            {loading && <LoadingSpinner type="balls" />}
             {!loading && (
                 <Router>
                     <WriteComponent

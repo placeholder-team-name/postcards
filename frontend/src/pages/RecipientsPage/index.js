@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import {
     Container,
@@ -18,7 +18,7 @@ const RecipientsPage = ({ user }) => {
     if (loading) {
         return (
             <Container>
-                <LoadingSpinner />
+                <LoadingSpinner type="balls" />
             </Container>
         );
     }

@@ -54,27 +54,32 @@ const WriteAndPreviewComponent = ({ user }) => {
         };
     }, [month, user, year]);
 
+    if (loading) {
+        return (
+            <ScrollView flex={1} justifyContent="center" alignItems="center">
+                <LoadingSpinner type="balls" />
+            </ScrollView>
+        );
+    }
+
     return (
         <ScrollView>
             <Container>
-                {loading && <LoadingSpinner type="balls" />}
-                {!loading && (
-                    <Router>
-                        <WriteComponent
-                            path="/"
-                            user={user}
-                            userNotebookContent={userNotebookContent}
-                            setUserNotebookContent={setUserNotebookContent}
-                            year={year}
-                            month={month}
-                            currentTime={currentTime}
-                        />
-                        <PreviewComponent
-                            path="preview"
-                            HTMLContent={HTMLContent}
-                        />
-                    </Router>
-                )}
+                <Router>
+                    <WriteComponent
+                        path="/"
+                        user={user}
+                        userNotebookContent={userNotebookContent}
+                        setUserNotebookContent={setUserNotebookContent}
+                        year={year}
+                        month={month}
+                        currentTime={currentTime}
+                    />
+                    <PreviewComponent
+                        path="preview"
+                        HTMLContent={HTMLContent}
+                    />
+                </Router>
             </Container>
         </ScrollView>
     );

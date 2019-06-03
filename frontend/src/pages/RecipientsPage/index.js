@@ -18,10 +18,8 @@ const RecipientsPage = ({ user }) => {
 
     if (loading) {
         return (
-            <ScrollView>
-                <Container>
-                    <LoadingSpinner type="balls" />
-                </Container>
+            <ScrollView flex={1} justifyContent="center" alignItems="center">
+                <LoadingSpinner type="balls" />
             </ScrollView>
         );
     }

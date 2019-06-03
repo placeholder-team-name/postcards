@@ -3,6 +3,7 @@ import { Router } from "@reach/router";
 import styled from "styled-components";
 
 import LoadingSpinner from "./components/LoadingSpinner";
+import { ScrollView } from "./components/globals";
 import NavBar from "./components/NavBar";
 import WriteAndPreviewComponent from "./components/WriteAndPreviewComponent";
 import LandingPage from "./pages/LandingPage";
@@ -23,7 +24,11 @@ function App() {
     const [user, loading] = useAuth();
 
     if (loading) {
-        return <LoadingSpinner type="circle" />;
+        return (
+            <ScrollView flex={1} justifyContent="center" alignItems="center">
+                <LoadingSpinner type="circle" />
+            </ScrollView>
+        );
     }
 
     return (

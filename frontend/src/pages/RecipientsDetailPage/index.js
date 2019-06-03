@@ -10,7 +10,11 @@ const RecipientsDetailPage = ({ user, recipientID }) => {
 
     // TODO: Make sure users can only access their own recipients
     if (loading) {
-        return <LoadingSpinner type="balls" />;
+        return (
+            <ScrollView flex={1} justifyContent="center" alignItems="center">
+                <LoadingSpinner type="balls" />
+            </ScrollView>
+        );
     }
 
     if (recipientsDetail) {

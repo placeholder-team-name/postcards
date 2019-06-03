@@ -216,7 +216,8 @@ Card.propTypes = {
 };
 
 export const Container = styled(Box)({
-    maxWidth: "1024px"
+    maxWidth: "1024px",
+    width: "100%"
 });
 
 Container.defaultProps = {
@@ -260,6 +261,10 @@ Avatar.defaultProps = {
     borderRadius: "50%"
 };
 
-export const ScrollView = styled(Box)({
+export const ScrollView = styled(Flex)({
     overflowY: "auto"
 });
+
+ScrollView.defaultProps = {
+    flexDirection: "column"
+};

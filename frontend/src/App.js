@@ -8,6 +8,7 @@ import LandingPage from "./pages/LandingPage";
 import SettingsPage from "./pages/SettingsPage";
 import RecipientsPage from "./pages/RecipientsPage";
 import RecipientsNewPage from "./pages/RecipientsNewPage";
+import RecipientsDetailPage from "./pages/RecipientsDetailPage";
 
 import useAuth from "./hooks/useAuth";
 
@@ -27,6 +28,10 @@ function App() {
                     <SettingsPage path="/settings" user={user} />
                     <RecipientsPage path="/recipients" user={user} />
                     <RecipientsNewPage path="/recipients/new" user={user} />
+                    <RecipientsDetailPage
+                        path="/recipients/:recipientID"
+                        user={user}
+                    />
                 </Router>
             ) : (
                 <Router>

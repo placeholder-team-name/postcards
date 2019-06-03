@@ -7,15 +7,28 @@ import useRecipients from "../../hooks/useRecipients";
 const RecipientsPage = ({ user }) => {
     const [recipients, loading] = useRecipients(user);
 
-    console.log(recipients);
     // TODO: Add proper empty state
     return (
         <Container>
-            <p>I'm a recipients page</p>
             <Button to="/recipients/new" as={PageLink}>
                 Add
             </Button>
-            {recipients.length > 0 ? <p>Contacts</p> : <p>No recipients</p>}
+            {recipients.length > 0 ? (
+                recipients.map(recipient => {
+                    const { id, firstName, lastName, email } = recipient;
+                    return (
+                        <div key={id}>
+                            <div>{`${firstName} ${lastName}`}</div>
+                            <div>{`${email}`}</div>
+                            <Button as={PageLink} to={id}>
+                                View
+                            </Button>
+                        </div>
+                    );
+                })
+            ) : (
+                <p>No recipients</p>
+            )}
         </Container>
     );
 };

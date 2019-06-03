@@ -32,10 +32,8 @@ const RecipientsNewPage = ({ user }) => {
                         let isUnique = true;
                         snapshot.forEach(function(childSnapshot) {
                             const recipient = childSnapshot.val();
-                            console.log(recipient);
                             if (recipient.email === values.email) {
                                 isUnique = false;
-                                console.log("EXISTS");
                             }
                         });
                         // ...

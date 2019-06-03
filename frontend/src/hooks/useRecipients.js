@@ -10,7 +10,13 @@ function useRecipients(user) {
         recipientsRef.on("value", snap => {
             let recipients = [];
             snap.forEach(childSnap => {
-                recipients = [...recipients, childSnap.val()];
+                recipients = [
+                    ...recipients,
+                    {
+                        id: childSnap.key,
+                        ...childSnap.val()
+                    }
+                ];
             });
             setRecipients(recipients);
             setLoading(false);

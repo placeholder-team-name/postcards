@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Router } from "@reach/router";
 import styled from "styled-components";
 
@@ -13,6 +13,7 @@ import RecipientsNewPage from "./pages/RecipientsNewPage";
 import RecipientsDetailPage from "./pages/RecipientsDetailPage";
 
 import useAuth from "./hooks/useAuth";
+import usePushNotifications from "./hooks/usePushNotifications";
 
 const MainRouter = styled(Router)`
     display: flex;
@@ -22,6 +23,13 @@ const MainRouter = styled(Router)`
 
 function App() {
     const [user, loading] = useAuth();
+    const [pushIsEnabled, requestPermission] = usePushNotifications(user);
+
+    useEffect(() => {
+        if (!loading && user) {
+            requestPermission();
+        }
+    }, [user, loading, requestPermission, pushIsEnabled]);
 
     if (loading) {
         return (

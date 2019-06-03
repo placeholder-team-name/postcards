@@ -9,7 +9,11 @@ import {
     ScrollView
 } from "../../components/globals";
 
+import usePushNotifications from "../../hooks/usePushNotifications";
+
 const SettingsPage = ({ user }) => {
+    const [pushIsEnabled, requestPermission] = usePushNotifications(user);
+
     function handleSignOut() {
         firebase
             .auth()
@@ -22,6 +26,7 @@ const SettingsPage = ({ user }) => {
             <Container>
                 <Heading as="h1" fontSize={5} mt={12}>
                     Settings
+                    {`asd ${pushIsEnabled}`}
                 </Heading>
                 <p>Wow do u want push notifications</p>
                 <Button onClick={handleSignOut}>Sign out</Button>

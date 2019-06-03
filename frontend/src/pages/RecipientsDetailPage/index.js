@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Container, Heading, Text } from "../../components/globals";
+import { Container, Heading, Text, ScrollView } from "../../components/globals";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
 import useRecipientsDetail from "../../hooks/useRecipientsDetail";
@@ -17,12 +17,14 @@ const RecipientsDetailPage = ({ user, recipientID }) => {
         const { firstName, lastName, email } = recipientsDetail;
 
         return (
-            <Container>
-                <Heading as="h1" fontSize={5} mt={12}>
-                    {`${firstName} ${lastName}`}
-                </Heading>
-                <Text as="span">{email}</Text>
-            </Container>
+            <ScrollView>
+                <Container>
+                    <Heading as="h1" fontSize={5} mt={12}>
+                        {`${firstName} ${lastName}`}
+                    </Heading>
+                    <Text as="span">{email}</Text>
+                </Container>
+            </ScrollView>
         );
     }
 

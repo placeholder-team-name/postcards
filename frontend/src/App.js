@@ -1,5 +1,6 @@
 import React from "react";
 import { Router } from "@reach/router";
+import styled from "styled-components";
 
 import LoadingSpinner from "./components/LoadingSpinner";
 import NavBar from "./components/NavBar";
@@ -12,6 +13,12 @@ import RecipientsDetailPage from "./pages/RecipientsDetailPage";
 
 import useAuth from "./hooks/useAuth";
 
+const MainRouter = styled(Router)`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+`;
+
 function App() {
     const [user, loading] = useAuth();
 
@@ -23,7 +30,7 @@ function App() {
         <>
             <NavBar user={user} />
             {user ? (
-                <Router>
+                <MainRouter>
                     <WriteAndPreviewComponent path="/*" user={user} />
                     <SettingsPage path="/settings" user={user} />
                     <RecipientsPage path="/recipients" user={user} />
@@ -32,11 +39,11 @@ function App() {
                         path="/recipients/:recipientID"
                         user={user}
                     />
-                </Router>
+                </MainRouter>
             ) : (
-                <Router>
+                <MainRouter>
                     <LandingPage path="/" />
-                </Router>
+                </MainRouter>
             )}
         </>
     );

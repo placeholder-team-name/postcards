@@ -259,3 +259,7 @@ Avatar.defaultProps = {
     size: 48,
     borderRadius: "50%"
 };
+
+export const ScrollView = styled(Box)({
+    overflowY: "auto"
+});

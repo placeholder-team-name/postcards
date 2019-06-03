@@ -7,7 +7,7 @@ import { EditorState, convertFromHTML, ContentState } from "draft-js";
 import { WriteComponent } from "./WriteComponent";
 import { PreviewComponent } from "./PreviewComponent";
 import LoadingSpinner from "../LoadingSpinner";
-import { Container } from "../globals";
+import { Container, ScrollView } from "../globals";
 
 const WriteAndPreviewComponent = ({ user }) => {
     const [userNotebookContent, setUserNotebookContent] = useState(
@@ -55,26 +55,28 @@ const WriteAndPreviewComponent = ({ user }) => {
     }, [month, user, year]);
 
     return (
-        <Container>
-            {loading && <LoadingSpinner type="balls" />}
-            {!loading && (
-                <Router>
-                    <WriteComponent
-                        path="/"
-                        user={user}
-                        userNotebookContent={userNotebookContent}
-                        setUserNotebookContent={setUserNotebookContent}
-                        year={year}
-                        month={month}
-                        currentTime={currentTime}
-                    />
-                    <PreviewComponent
-                        path="preview"
-                        HTMLContent={HTMLContent}
-                    />
-                </Router>
-            )}
-        </Container>
+        <ScrollView>
+            <Container>
+                {loading && <LoadingSpinner type="balls" />}
+                {!loading && (
+                    <Router>
+                        <WriteComponent
+                            path="/"
+                            user={user}
+                            userNotebookContent={userNotebookContent}
+                            setUserNotebookContent={setUserNotebookContent}
+                            year={year}
+                            month={month}
+                            currentTime={currentTime}
+                        />
+                        <PreviewComponent
+                            path="preview"
+                            HTMLContent={HTMLContent}
+                        />
+                    </Router>
+                )}
+            </Container>
+        </ScrollView>
     );
 };
 

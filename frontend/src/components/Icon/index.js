@@ -15,7 +15,7 @@ function Icon({ size = 32, onClick, glyph }) {
                 strokeMiterlimit="1.414"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-labelledby="title"
-                viewBox="0 0 32 32"
+                viewBox="0 0 24 24"
                 preserveAspectRatio="xMidYMid meet"
                 fit
                 id={glyph}

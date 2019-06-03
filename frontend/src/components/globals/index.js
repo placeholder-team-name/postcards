@@ -230,10 +230,13 @@ Measure.defaultProps = {
     maxWidth: "30rem"
 };
 
-export const PageLink = styled(ReachLink)({
-    textDecoration: "none",
-    color: "inherit"
-});
+export const PageLink = styled(ReachLink)(
+    {
+        textDecoration: "none",
+        color: "inherit"
+    },
+    color
+);
 
 export const Avatar = styled("img")(
     {

@@ -4,7 +4,7 @@ import { navigate } from "@reach/router";
 import * as Yup from "yup";
 import { db } from "../../firebase";
 
-import { Container, Button, PageLink } from "../../components/globals";
+import { Container, Button, PageLink, Heading } from "../../components/globals";
 
 const RecipientsNewSchema = Yup.object().shape({
     firstName: Yup.string().required("First name is required"),
@@ -17,7 +17,9 @@ const RecipientsNewSchema = Yup.object().shape({
 const RecipientsNewPage = ({ user }) => {
     return (
         <Container>
-            <div>I'm a RecipientsNewPage</div>
+            <Heading as="h1" fontSize={5} mt={12}>
+                New Recipient
+            </Heading>
             <Formik
                 initialValues={{
                     firstName: "",

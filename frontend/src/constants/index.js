@@ -31,5 +31,12 @@ export const Prompts = {
     5: {
         1: "Happy June! Summer is starting! How do you feel about that?",
         DEFAULT: ""
+    },
+    /** July */
+    6: {
+        4: "Happy Independence Day! How are you spending the Fourth of July?",
+        DEFAULT: ""
     }
-}
+};
+
+export const Endpoint = "http://localhost:8080"; // need to change this 

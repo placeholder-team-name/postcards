@@ -7,7 +7,7 @@ import { EditorState, convertFromHTML, ContentState } from "draft-js";
 import { WriteComponent } from "./WriteComponent";
 import { PreviewComponent } from "./PreviewComponent";
 import LoadingSpinner from "../LoadingSpinner";
-import { Container } from "../globals";
+import { Container, ScrollView } from "../globals";
 
 const WriteAndPreviewComponent = ({ user }) => {
     const [userNotebookContent, setUserNotebookContent] = useState(
@@ -56,10 +56,17 @@ const WriteAndPreviewComponent = ({ user }) => {
         };
     }, [month, user, year]);
 
+    if (loading) {
+        return (
+            <ScrollView flex={1} justifyContent="center" alignItems="center">
+                <LoadingSpinner type="balls" />
+            </ScrollView>
+        );
+    }
+
     return (
-        <Container>
-            {loading && <LoadingSpinner />}
-            {!loading && (
+        <ScrollView>
+            <Container>
                 <Router>
                     <WriteComponent
                         path="/"
@@ -76,8 +83,8 @@ const WriteAndPreviewComponent = ({ user }) => {
                         HTMLContent={HTMLContent}
                     />
                 </Router>
-            )}
-        </Container>
+            </Container>
+        </ScrollView>
     );
 };
 

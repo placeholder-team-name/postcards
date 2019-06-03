@@ -7,8 +7,10 @@
         "draft-js": "^0.10.5",
         "draftjs-to-html": "^0.8.4",
         "firebase": "^6.0.2",
+        "formik": "^1.5.7",
         "grid-styled": "^5.0.2",
         "immutable": "^4.0.0-rc.12",
+        "loaders.css": "^0.1.2",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
         "react-draft-wysiwyg": "^1.13.2",
@@ -17,7 +19,8 @@
         "react-router-dom": "^5.0.0",
         "react-scripts": "3.0.1",
         "styled-components": "^4.2.0",
-        "styled-system": "^4.2.2"
+        "styled-system": "^4.2.2",
+        "yup": "^0.27.0"
     },
     "scripts": {
         "start": "react-scripts start",

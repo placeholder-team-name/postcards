@@ -216,7 +216,8 @@ Card.propTypes = {
 };
 
 export const Container = styled(Box)({
-    maxWidth: "1024px"
+    maxWidth: "1024px",
+    width: "100%"
 });
 
 Container.defaultProps = {
@@ -230,10 +231,13 @@ Measure.defaultProps = {
     maxWidth: "30rem"
 };
 
-export const PageLink = styled(ReachLink)({
-    textDecoration: "none",
-    color: "inherit"
-});
+export const PageLink = styled(ReachLink)(
+    {
+        textDecoration: "none",
+        color: "inherit"
+    },
+    color
+);
 
 export const Avatar = styled("img")(
     {
@@ -255,4 +259,12 @@ Avatar.propTypes = {
 Avatar.defaultProps = {
     size: 48,
     borderRadius: "50%"
+};
+
+export const ScrollView = styled(Flex)({
+    overflowY: "auto"
+});
+
+ScrollView.defaultProps = {
+    flexDirection: "column"
 };

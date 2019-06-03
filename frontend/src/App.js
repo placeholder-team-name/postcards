@@ -7,6 +7,7 @@ import WriteAndPreviewComponent from "./components/WriteAndPreviewComponent";
 import LandingPage from "./pages/LandingPage";
 import SettingsPage from "./pages/SettingsPage";
 import RecipientsPage from "./pages/RecipientsPage";
+import RecipientsNewPage from "./pages/RecipientsNewPage";
 
 import useAuth from "./hooks/useAuth";
 
@@ -25,6 +26,7 @@ function App() {
                     <WriteAndPreviewComponent path="/*" user={user} />
                     <SettingsPage path="/settings" user={user} />
                     <RecipientsPage path="/recipients" user={user} />
+                    <RecipientsNewPage path="/recipients/new" user={user} />
                 </Router>
             ) : (
                 <Router>

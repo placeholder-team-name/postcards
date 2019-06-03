@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
 
+// TODO: Error handling?
 function useRecipients(user) {
     const [recipients, setRecipients] = useState([]);
     const [loading, setLoading] = useState(true);

@@ -13,7 +13,7 @@ function AuthApp({ user }) {
     const { isPushEnabled, enablePush, disablePush } = usePush(user);
 
     useEffect(() => {
-        enablePush();
+        enablePush(false);
     }, []);
 
     return (

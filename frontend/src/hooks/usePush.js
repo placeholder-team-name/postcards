@@ -39,16 +39,27 @@ function usePush(user) {
         });
     }, []);
 
-    function enablePush() {
+    function enablePush(override = true) {
         Notification.requestPermission().then(permission => {
             if (permission === PERMISSION_GRANTED) {
                 messaging
                     .getToken()
                     .then(currentToken => {
                         if (currentToken) {
-                            enableToken(currentToken)
-                                .then(() => {
-                                    setIsPushEnabled(true);
+                            tokenExists(currentToken)
+                                .then(exists => {
+                                    if (override || !exists) {
+                                        enableToken(currentToken)
+                                            .then(() => {
+                                                setIsPushEnabled(true);
+                                            })
+                                            .catch(() => {
+                                                setIsPushEnabled(false);
+                                            });
+                                    }
+                                    // TODO: We do nothing if a token already
+                                    // exists, but it might be good to make
+                                    // sure isPushEnabled is up to date
                                 })
                                 .catch(() => {
                                     setIsPushEnabled(false);
@@ -172,6 +183,21 @@ function usePush(user) {
                 return db
                     .ref(`push-notification-tokens/${user.uid}`)
                     .set(tokens);
+            });
+    }
+
+    function tokenExists(token) {
+        return db
+            .ref(`push-notification-tokens/${user.uid}/${token}`)
+            .once("value")
+            .then(snap => {
+                if (snap && snap.val() !== null) {
+                    return true;
+                }
+                return false;
+            })
+            .catch(() => {
+                return false;
             });
     }
 

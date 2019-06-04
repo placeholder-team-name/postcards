@@ -43,19 +43,21 @@ export const Prompts = {
     },
     /** September */
     8: {
-        DEFAULT: "September message"
+        DEFAULT: "How have you been?"
     },
     /** October */
     9: {
-        DEFAULT: "October message"
+        DEFAULT: "It's starting to get chilly out! What have you been up to?",
+        31: "Happy Halloween! What kind of candy did you have today?"
     },
     /** November */
     10: {
-        DEFAULT: "November message"
+        DEFAULT: "How has your schedule been?",
+        25: "It's around that time of year! What are you thankful for?"
     },
     /** December */
     11: {
         25: "Merry Christmas! If you did, how did you celebrate?",
-        DEFAULT: "December message"
+        DEFAULT: "What are you looking forward to?"
     }
 }

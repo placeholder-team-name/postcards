@@ -17,49 +17,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-db.ref(`push-notification-tokens`)
-    .once("value")
-    .then(function(snapshot) {
-        if (snapshot) {
-            let receivers = [];
-
-            snapshot = snapshot.val();
-            for (let uid in snapshot) {
-                const tokens = snapshot[uid];
-                for (let token in tokens) {
-                    if (tokens[token]) {
-                        receivers = [...receivers, token];
-                    }
-                }
-            }
-
-            const message = {
-                notification: {
-                    title: "Wow!",
-                    body: "Ghehhehehe"
-                },
-                tokens: receivers
-            };
-
-            // TODO: Take into account 100 device token limit
-            admin
-                .messaging()
-                .sendMulticast(message)
-                .then(response => {
-                    if (response.failureCount > 0) {
-                        const failedTokens = [];
-                        response.responses.forEach((resp, idx) => {
-                            if (!resp.success) {
-                                failedTokens.push(receivers[idx]);
-                            }
-                        });
-                        // TODO: Log failedTokens
-                        // Perhaps set them to `false` in DB?
-                    }
-                });
-        }
-    });
-
 // TODO: Change this from once every minute to something
 // more realistic
 cron.schedule("*/1 * * * *", () => {

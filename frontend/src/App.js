@@ -26,10 +26,11 @@ function App() {
     const [pushIsEnabled, requestPermission] = usePushNotifications(user);
 
     useEffect(() => {
+        console.log("IM THE APPS EFFECT");
         if (!loading && user) {
             requestPermission();
         }
-    }, [user, loading, requestPermission, pushIsEnabled]);
+    }, [user, loading, requestPermission]);
 
     if (loading) {
         return (

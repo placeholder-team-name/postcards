@@ -20,6 +20,9 @@ function usePushNotifications(user) {
                     console.log("Unable to retrieve refreshed token ", err);
                 });
         });
+        console.log("IM EFFECT");
+
+        resetUI();
     }, []);
 
     function requestPermission() {
@@ -45,6 +48,7 @@ function usePushNotifications(user) {
         messaging
             .getToken()
             .then(function(currentToken) {
+                console.log(currentToken);
                 if (currentToken) {
                     sendTokenToServer(currentToken);
                     setPushIsEnabled(true);
@@ -103,7 +107,29 @@ function usePushNotifications(user) {
         window.localStorage.setItem("sentToServer", sent ? "1" : "0");
     }
 
-    return [pushIsEnabled, requestPermission];
+    function deleteToken() {
+        // TODO: ACtually delete token from server too?
+        // TODO: How do you properly disable push notifs?
+        messaging
+            .getToken()
+            .then(function(currentToken) {
+                messaging
+                    .deleteToken(currentToken)
+                    .then(function() {
+                        console.log("UEAAH");
+                        setTokenSentToServer(false);
+                        // resetUI();
+                    })
+                    .catch(function(err) {
+                        console.log("Unable to delete token. ", err);
+                    });
+            })
+            .catch(function(err) {
+                console.log("Error retrieving Instance ID token. ", err);
+            });
+    }
+
+    return [pushIsEnabled, requestPermission, deleteToken];
 }
 
 export default usePushNotifications;

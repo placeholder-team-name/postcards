@@ -12,7 +12,11 @@ import {
 import usePushNotifications from "../../hooks/usePushNotifications";
 
 const SettingsPage = ({ user }) => {
-    const [pushIsEnabled, requestPermission] = usePushNotifications(user);
+    const [
+        pushIsEnabled,
+        requestPermission,
+        deleteToken
+    ] = usePushNotifications(user);
 
     function handleSignOut() {
         firebase
@@ -21,6 +25,7 @@ const SettingsPage = ({ user }) => {
             .then(() => navigate("/"));
     }
 
+    console.log(deleteToken);
     return (
         <ScrollView>
             <Container>
@@ -28,6 +33,7 @@ const SettingsPage = ({ user }) => {
                     Settings
                     {`asd ${pushIsEnabled}`}
                 </Heading>
+                <button onClick={() => deleteToken()}>Delete</button>
                 <p>Wow do u want push notifications</p>
                 <Button onClick={handleSignOut}>Sign out</Button>
             </Container>

@@ -9,15 +9,7 @@ import {
     ScrollView
 } from "../../components/globals";
 
-import usePushNotifications from "../../hooks/usePushNotifications";
-
-const SettingsPage = ({ user }) => {
-    const [
-        pushIsEnabled,
-        requestPermission,
-        deleteToken
-    ] = usePushNotifications(user);
-
+const SettingsPage = ({ isPushEnabled, enablePush, disablePush }) => {
     function handleSignOut() {
         firebase
             .auth()
@@ -25,17 +17,28 @@ const SettingsPage = ({ user }) => {
             .then(() => navigate("/"));
     }
 
-    console.log(deleteToken);
     return (
         <ScrollView>
             <Container>
                 <Heading as="h1" fontSize={5} mt={12}>
                     Settings
-                    {`asd ${pushIsEnabled}`}
                 </Heading>
-                <button onClick={() => deleteToken()}>Delete</button>
-                <p>Wow do u want push notifications</p>
-                <Button onClick={handleSignOut}>Sign out</Button>
+                {isPushEnabled ? (
+                    <div>
+                        <Button onClick={disablePush}>
+                            Disable Push Notifications
+                        </Button>
+                    </div>
+                ) : (
+                    <div>
+                        <Button onClick={enablePush}>
+                            Enable Push Notifications
+                        </Button>
+                    </div>
+                )}
+                <div>
+                    <Button onClick={handleSignOut}>Sign out</Button>
+                </div>
             </Container>
         </ScrollView>
     );

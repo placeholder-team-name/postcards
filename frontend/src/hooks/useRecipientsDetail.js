@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { db } from "../firebase";
 
 // TODO: Error handling?
-function useRecipientsDetail(user, recipientID) {
+function useRecipientsDetail(user, recipientID, isEditing) {
     const [recipientsDetail, setRecipientsDetail] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -21,7 +21,7 @@ function useRecipientsDetail(user, recipientID) {
         return () => {
             recipientsDetailRef.off();
         };
-    }, [user.uid, recipientID]);
+    }, [user.uid, recipientID, isEditing]);
 
     return [recipientsDetail, loading];
 }

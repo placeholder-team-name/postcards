@@ -1,8 +1,6 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import { navigate } from "@reach/router";
-import * as Yup from "yup";
-import { db } from "../../firebase";
 
 import {
     Container,
@@ -10,14 +8,8 @@ import {
     Heading,
     ScrollView
 } from "../../components/globals";
-
-const RecipientsNewSchema = Yup.object().shape({
-    firstName: Yup.string().required("First name is required"),
-    lastName: Yup.string().required("Last name is required"),
-    email: Yup.string()
-        .email("Invalid email")
-        .required("Email is required")
-});
+import { db } from "../../firebase";
+import validationSchema from "../../helpers/recipients/validationSchema";
 
 const RecipientsNewPage = ({ user }) => {
     return (
@@ -32,7 +24,7 @@ const RecipientsNewPage = ({ user }) => {
                         lastName: "",
                         email: ""
                     }}
-                    validationSchema={RecipientsNewSchema}
+                    validationSchema={validationSchema}
                     onSubmit={(values, actions) => {
                         db.ref(`recipients/${user.uid}`).once("value", function(
                             snapshot

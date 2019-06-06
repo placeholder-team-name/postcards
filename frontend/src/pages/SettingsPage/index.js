@@ -9,7 +9,12 @@ import {
     ScrollView
 } from "../../components/globals";
 
-const SettingsPage = ({ isPushEnabled, enablePush, disablePush }) => {
+const SettingsPage = ({
+    isPushEnabled,
+    enablePush,
+    disablePush,
+    isAllowedByBrowser
+}) => {
     function handleSignOut() {
         firebase
             .auth()
@@ -17,25 +22,42 @@ const SettingsPage = ({ isPushEnabled, enablePush, disablePush }) => {
             .then(() => navigate("/"));
     }
 
+    function renderPushPermissions() {
+        if (isPushEnabled) {
+            return (
+                <div>
+                    <Button onClick={disablePush}>
+                        Disable Push Notifications
+                    </Button>
+                </div>
+            );
+        }
+        if (isAllowedByBrowser) {
+            return (
+                <div>
+                    <Button onClick={enablePush}>
+                        Enable Push Notifications
+                    </Button>
+                </div>
+            );
+        }
+
+        return (
+            <div>
+                <Button disabled>Enable Push Notifications</Button>
+                Please enable push notifications in your browser and refresh
+                this page.
+            </div>
+        );
+    }
+
     return (
         <ScrollView>
-            <Container>
-                <Heading as="h1" fontSize={5} mt={12}>
+            <Container my={12}>
+                <Heading as="h1" fontSize={5} mt={0}>
                     Settings
                 </Heading>
-                {isPushEnabled ? (
-                    <div>
-                        <Button onClick={disablePush}>
-                            Disable Push Notifications
-                        </Button>
-                    </div>
-                ) : (
-                    <div>
-                        <Button onClick={enablePush}>
-                            Enable Push Notifications
-                        </Button>
-                    </div>
-                )}
+                {renderPushPermissions()}
                 <div>
                     <Button onClick={handleSignOut}>Sign out</Button>
                 </div>

@@ -51,6 +51,7 @@ export const Box = styled("div")(
     order,
     alignSelf,
     maxWidth,
+    height,
     themed("Box")
 );
 
@@ -63,7 +64,8 @@ Box.propTypes = {
     ...flex.propTypes,
     ...order.propTypes,
     ...alignSelf.propTypes,
-    ...maxWidth.propTypes
+    ...maxWidth.propTypes,
+    ...height.propTypes
 };
 
 export const Flex = styled(Box)(
@@ -135,12 +137,12 @@ export const Button = styled(Box)(
         display: "inline-block",
         textAlign: "center",
         lineHeight: "inherit",
-        textDecoration: "none"
+        textDecoration: "none",
+        borderRadius: "4px"
     },
     fontWeight,
     borders,
     borderColor,
-    borderRadius,
     buttonStyle,
     themed("Button")
 );
@@ -149,7 +151,6 @@ Button.propTypes = {
     ...fontWeight.propTypes,
     ...borders.propTypes,
     ...borderColor.propTypes,
-    ...borderRadius.propTypes,
     ...buttonStyle.propTypes
 };
 
@@ -162,8 +163,7 @@ Button.defaultProps = {
     py: 2,
     color: "white",
     bg: "blue",
-    border: 0,
-    borderRadius: 4
+    border: 0
 };
 
 export const Image = styled(Box)(
@@ -234,7 +234,8 @@ Measure.defaultProps = {
 export const PageLink = styled(ReachLink)(
     {
         textDecoration: "none",
-        color: "inherit"
+        color: "inherit",
+        lineHeight: 1
     },
     color
 );
@@ -266,5 +267,6 @@ export const ScrollView = styled(Flex)({
 });
 
 ScrollView.defaultProps = {
-    flexDirection: "column"
+    flexDirection: "column",
+    flex: 1
 };

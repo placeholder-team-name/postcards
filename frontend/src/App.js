@@ -2,10 +2,8 @@ import React from "react";
 
 import { ScrollView } from "./components/globals";
 import LoadingSpinner from "./components/LoadingSpinner";
-import NavBar from "./components/NavBar";
 import AuthApp from "./components/AuthApp";
-import MainRouter from "./components/MainRouter";
-import LandingPage from "./pages/LandingPage";
+import UnauthApp from "./components/UnauthApp";
 
 import useAuth from "./hooks/useAuth";
 
@@ -20,18 +18,11 @@ function App() {
         );
     }
 
-    return (
-        <>
-            <NavBar user={user} />
-            {user ? (
-                <AuthApp user={user} />
-            ) : (
-                <MainRouter>
-                    <LandingPage path="/" />
-                </MainRouter>
-            )}
-        </>
-    );
+    if (user) {
+        return <AuthApp user={user} />;
+    }
+
+    return <UnauthApp />;
 }
 
 export default App;

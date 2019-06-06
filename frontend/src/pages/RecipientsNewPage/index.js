@@ -1,8 +1,6 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import { navigate } from "@reach/router";
-import * as Yup from "yup";
-import { db } from "../../firebase";
 
 import {
     Container,
@@ -10,20 +8,45 @@ import {
     Heading,
     ScrollView
 } from "../../components/globals";
-
-const RecipientsNewSchema = Yup.object().shape({
-    firstName: Yup.string().required("First name is required"),
-    lastName: Yup.string().required("Last name is required"),
-    email: Yup.string()
-        .email("Invalid email")
-        .required("Email is required")
-});
+import { db } from "../../firebase";
+import validationSchema from "../../helpers/recipients/validationSchema";
+import hasUniqueEmail from "../../helpers/recipients/hasUniqueEmail";
 
 const RecipientsNewPage = ({ user }) => {
+    async function handleSubmit(values, actions) {
+        const isUnique = await hasUniqueEmail(user, values.email);
+
+        if (isUnique) {
+            try {
+                await db
+                    .ref(`recipients/${user.uid}`)
+                    .push()
+                    .set(values);
+
+                // TODO: Read setSubmitting documentation
+                actions.setSubmitting(false);
+                navigate("/recipients");
+            } catch {
+                actions.setSubmitting(false);
+                actions.setStatus({
+                    msg: "Something went wrong! Please try again."
+                });
+            }
+        } else {
+            actions.setSubmitting(false);
+            actions.setErrors({
+                email: "Email already exists"
+            });
+            actions.setStatus({
+                msg: "Error creating new recipient"
+            });
+        }
+    }
+
     return (
         <ScrollView>
-            <Container>
-                <Heading as="h1" fontSize={5} mt={12}>
+            <Container my={12}>
+                <Heading as="h1" fontSize={5} mt={0}>
                     New Recipient
                 </Heading>
                 <Formik
@@ -32,41 +55,8 @@ const RecipientsNewPage = ({ user }) => {
                         lastName: "",
                         email: ""
                     }}
-                    validationSchema={RecipientsNewSchema}
-                    onSubmit={(values, actions) => {
-                        db.ref(`recipients/${user.uid}`).once("value", function(
-                            snapshot
-                        ) {
-                            let isUnique = true;
-                            snapshot.forEach(function(childSnapshot) {
-                                const recipient = childSnapshot.val();
-                                if (recipient.email === values.email) {
-                                    isUnique = false;
-                                }
-                            });
-                            // ...
-                            // TODO: Could this cause a race condition?
-                            if (isUnique) {
-                                const newRecipientRef = db
-                                    .ref(`recipients/${user.uid}`)
-                                    .push();
-                                newRecipientRef.set(values).then(() => {
-                                    // TODO: Do we need this call?
-                                    actions.setSubmitting(false);
-                                    navigate("/recipients");
-                                });
-                            } else {
-                                actions.setSubmitting(false);
-                                // TODO: Determine if this is the correct way to do it
-                                actions.setErrors({
-                                    email: "Email already exists"
-                                });
-                                actions.setStatus({
-                                    msg: "Error creating new recipient"
-                                });
-                            }
-                        });
-                    }}
+                    validationSchema={validationSchema}
+                    onSubmit={handleSubmit}
                 >
                     {({ errors, touched, status }) => (
                         <Form>

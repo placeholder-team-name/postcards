@@ -27,7 +27,10 @@ const WriteAndPreviewComponent = ({ user }) => {
             .ref(`${user.uid}/${year}/${month}`);
         notebookRef.on("value", snap => {
             const firebaseData = snap.val() || { notebookContent: "" };
-            const { notebookContent, lastEditedTime: lastEditedTimeOnFirebase } = firebaseData;
+            const {
+                notebookContent,
+                lastEditedTime: lastEditedTimeOnFirebase
+            } = firebaseData;
             // default editor state to empty
             let editorState = EditorState.createEmpty();
 
@@ -66,7 +69,7 @@ const WriteAndPreviewComponent = ({ user }) => {
 
     return (
         <ScrollView>
-            <Container>
+            <Container my={12}>
                 <Router>
                     <WriteComponent
                         path="/"

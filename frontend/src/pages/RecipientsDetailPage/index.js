@@ -4,7 +4,6 @@ import { Formik, Form, Field } from "formik";
 import {
     Container,
     Heading,
-    Text,
     ScrollView,
     Button
 } from "../../components/globals";

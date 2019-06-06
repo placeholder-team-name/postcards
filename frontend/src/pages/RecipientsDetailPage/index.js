@@ -11,6 +11,8 @@ import {
 import LoadingSpinner from "../../components/LoadingSpinner";
 import useRecipientsDetail from "../../hooks/useRecipientsDetail";
 import validationSchema from "../../helpers/recipients/validationSchema";
+import hasUniqueEmail from "../../helpers/recipients/hasUniqueEmail";
+import { db } from "../../firebase";
 
 const RecipientsDetailPage = ({ user, recipientID }) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -23,6 +25,44 @@ const RecipientsDetailPage = ({ user, recipientID }) => {
     useEffect(() => {
         fetchRecipientsDetail(recipientID);
     }, [isEditing, recipientID]);
+
+    async function handleSubmit(values, actions) {
+        // TODO: There might be an opportunity here to share
+        // code with the new recipients page
+        // TODO: Read setSubmitting documentation
+        if (isEditing) {
+            let isUnique = true;
+            if (values.email !== recipientsDetail.email) {
+                isUnique = await hasUniqueEmail(user, values.email);
+            }
+
+            if (isUnique) {
+                try {
+                    await db
+                        .ref(`recipients/${user.uid}/${recipientID}`)
+                        .set(values);
+
+                    actions.setSubmitting(false);
+                    setIsEditing(false);
+                } catch {
+                    actions.setSubmitting(false);
+                    actions.setStatus({
+                        msg: "Something went wrong! Please try again."
+                    });
+                }
+            } else {
+                actions.setSubmitting(false);
+                actions.setErrors({
+                    email: "Email already exists"
+                });
+                actions.setStatus({
+                    msg: "Error saving changes"
+                });
+            }
+        } else {
+            actions.setSubmitting(false);
+        }
+    }
 
     // TODO: Make sure users can only access their own recipients
     if (loading) {
@@ -53,9 +93,7 @@ const RecipientsDetailPage = ({ user, recipientID }) => {
                             email
                         }}
                         validationSchema={validationSchema}
-                        onSubmit={(values, actions) => {
-                            // TODO: Check if user is still in edit
-                        }}
+                        onSubmit={handleSubmit}
                     >
                         {({ errors, touched, status }) => (
                             <Form>

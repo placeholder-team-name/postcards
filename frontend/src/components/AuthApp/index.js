@@ -10,7 +10,12 @@ import RecipientsDetailPage from "../../pages/RecipientsDetailPage";
 import usePush from "../../hooks/usePush";
 
 function AuthApp({ user }) {
-    const { isPushEnabled, enablePush, disablePush } = usePush(user);
+    const {
+        isPushEnabled,
+        enablePush,
+        disablePush,
+        isAllowedByBrowser
+    } = usePush(user);
 
     useEffect(() => {
         enablePush(false);
@@ -25,6 +30,7 @@ function AuthApp({ user }) {
                 isPushEnabled={isPushEnabled}
                 enablePush={enablePush}
                 disablePush={disablePush}
+                isAllowedByBrowser={isAllowedByBrowser}
             />
             <RecipientsPage path="/recipients" user={user} />
             <RecipientsNewPage path="/recipients/new" user={user} />

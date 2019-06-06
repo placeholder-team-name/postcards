@@ -9,6 +9,12 @@ function usePush(user) {
     // 2. the user has enabled push notifications in our app
     // 3. firebase has a push notification token
     const [isPushEnabled, setIsPushEnabled] = useState(false);
+    // This is a quick but sloppy way to cover our bases here
+    // TODO: Verify statement below is accurate
+    // Clients should only check isAllowedByBrowser if isPushEnabled
+    // is false because it's a latent variable. isAllowedByBrowser
+    // can still be false while isPushEnabled is already true.
+    const [isAllowedByBrowser, setisAllowedByBrowser] = useState(false);
 
     useEffect(() => {
         // Check if push notifications are currently enabled
@@ -42,6 +48,8 @@ function usePush(user) {
     function enablePush(override = true) {
         Notification.requestPermission().then(permission => {
             if (permission === PERMISSION_GRANTED) {
+                setisAllowedByBrowser(true);
+
                 messaging
                     .getToken()
                     .then(currentToken => {
@@ -77,6 +85,7 @@ function usePush(user) {
                     });
             } else {
                 console.log("Unable to get permission to notify.");
+                setisAllowedByBrowser(false);
                 setIsPushEnabled(false);
             }
         });
@@ -215,6 +224,7 @@ function usePush(user) {
 
     return {
         isPushEnabled,
+        isAllowedByBrowser,
         enablePush,
         disablePush
     };

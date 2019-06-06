@@ -42,6 +42,8 @@ function usePush(user) {
                     // off if this API call has only failed one time
                     setIsPushEnabled(false);
                 });
+            // https://github.com/mozilla/webextension-polyfill/issues/130
+            return true;
         });
     }, []);
 

@@ -27,9 +27,10 @@ function AuthApp({ user }) {
         <>
             <NavBar>
                 <Flex alignItems="center">
-                    <Text as={PageLink} to="/recipients" lineHeight="1">
-                        Recipients
-                    </Text>
+                    <PageLink to="/recipients">
+                        <Text lineHeight="1">Recipients</Text>
+                    </PageLink>
+
                     <PageLink to="/settings">
                         <Avatar src={user.photoURL} size={32} />
                     </PageLink>

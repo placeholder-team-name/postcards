@@ -53,22 +53,22 @@ const RecipientsPage = ({ user }) => {
                     {recipients.map((recipient, i) => {
                         const { id, firstName, lastName, email } = recipient;
                         return (
-                            <Flex
-                                key={id}
-                                as={PageLink}
-                                to={id}
-                                justifyContent="space-between"
-                                py={4}
-                            >
-                                <div>
+                            <PageLink key={id} to={id}>
+                                <Flex
+                                    justifyContent="space-between"
+                                    alignItems="center"
+                                    py={4}
+                                >
                                     <div>
-                                        {`${firstName} ${lastName}`.trim()}
+                                        <div>
+                                            {`${firstName} ${lastName}`.trim()}
+                                        </div>
+                                        <div>{`${email}`}</div>
                                     </div>
-                                    <div>{`${email}`}</div>
-                                </div>
 
-                                <Icon glyph="chevron-right" size={24} />
-                            </Flex>
+                                    <Icon glyph="chevron-right" size={24} />
+                                </Flex>
+                            </PageLink>
                         );
                     })}
                 </Box>

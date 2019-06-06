@@ -9,9 +9,11 @@ const NavBar = ({ children }) => {
                 alignItems="center"
                 height="100%"
             >
-                <Text as={PageLink} to="/" lineHeight="1" fontWeight="bold">
-                    Postcards
-                </Text>
+                <PageLink to="/">
+                    <Text lineHeight="1" fontWeight="bold">
+                        Postcards
+                    </Text>
+                </PageLink>
                 {children}
             </Flex>
         </Box>

@@ -51,6 +51,7 @@ export const Box = styled("div")(
     order,
     alignSelf,
     maxWidth,
+    height,
     themed("Box")
 );
 
@@ -63,7 +64,8 @@ Box.propTypes = {
     ...flex.propTypes,
     ...order.propTypes,
     ...alignSelf.propTypes,
-    ...maxWidth.propTypes
+    ...maxWidth.propTypes,
+    ...height.propTypes
 };
 
 export const Flex = styled(Box)(
@@ -266,5 +268,6 @@ export const ScrollView = styled(Flex)({
 });
 
 ScrollView.defaultProps = {
-    flexDirection: "column"
+    flexDirection: "column",
+    flex: 1
 };

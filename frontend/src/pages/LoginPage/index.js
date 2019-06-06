@@ -1,5 +1,6 @@
-import React from "react";
-import { Link } from "@reach/router";
+import React, { useState } from "react";
+import firebase from "firebase";
+import { navigate } from "@reach/router";
 
 import {
     Heading,
@@ -11,11 +12,23 @@ import {
 } from "../../components/globals";
 
 const LandingPage = () => {
+    const [authError, setAuthError] = useState(null);
+
+    const handleLogin = async () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        try {
+            await firebase.auth().signInWithPopup(provider);
+            navigate("/");
+        } catch (error) {
+            setAuthError(error);
+        }
+    };
+
     return (
         <ScrollView>
             <Container my={12}>
                 <Heading as="h1" fontSize={6} mt={0}>
-                    Take your family with you.
+                    Login or sign up
                 </Heading>
                 <Measure mt={6}>
                     <Text>
@@ -26,9 +39,10 @@ const LandingPage = () => {
                     </Text>
                 </Measure>
                 <Measure mt={6}>
-                    <Button as={Link} to="/login">
-                        Log in or sign up
+                    <Button onClick={handleLogin} bg="#dd5044">
+                        Continue with Google
                     </Button>
+                    {authError && <Text mt={4}>{authError.message}</Text>}
                 </Measure>
             </Container>
         </ScrollView>

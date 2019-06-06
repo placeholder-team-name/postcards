@@ -53,8 +53,8 @@ const SettingsPage = ({
 
     return (
         <ScrollView>
-            <Container>
-                <Heading as="h1" fontSize={5} mt={12}>
+            <Container my={12}>
+                <Heading as="h1" fontSize={5} mt={0}>
                     Settings
                 </Heading>
                 {renderPushPermissions()}

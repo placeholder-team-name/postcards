@@ -78,9 +78,9 @@ const RecipientsDetailPage = ({ user, recipientID }) => {
         // TODO: Don't forget about `Delete`
         return (
             <ScrollView>
-                <Container>
-                    <Heading as="h1" fontSize={5} mt={12}>
-                        {`${firstName} ${lastName}`}
+                <Container my={12}>
+                    <Heading as="h1" fontSize={5} mt={0}>
+                        {`${firstName} ${lastName}`.trim()}
                     </Heading>
                     {!isEditing && (
                         <Button onClick={() => setIsEditing(true)}>Edit</Button>

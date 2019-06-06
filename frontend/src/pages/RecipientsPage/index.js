@@ -42,8 +42,8 @@ const RecipientsPage = ({ user }) => {
 
     return (
         <ScrollView>
-            <Container>
-                <Heading as="h1" fontSize={5} mt={12}>
+            <Container my={12}>
+                <Heading as="h1" fontSize={5} mt={0}>
                     Recipients
                 </Heading>
                 <Button to="/recipients/new" as={PageLink} mt={4}>
@@ -61,7 +61,9 @@ const RecipientsPage = ({ user }) => {
                                 py={4}
                             >
                                 <div>
-                                    <div>{`${firstName} ${lastName}`}</div>
+                                    <div>
+                                        {`${firstName} ${lastName}`.trim()}
+                                    </div>
                                     <div>{`${email}`}</div>
                                 </div>
 

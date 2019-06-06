@@ -83,6 +83,7 @@ const WriteAndPreviewComponent = ({ user }) => {
                     />
                     <PreviewComponent
                         path="preview"
+                        user={user}
                         HTMLContent={HTMLContent}
                     />
                 </Router>

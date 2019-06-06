@@ -60,4 +60,6 @@ export const Prompts = {
         25: "Merry Christmas! If you did, how did you celebrate?",
         DEFAULT: "What are you looking forward to?"
     }
-}
+};
+
+export const Endpoint = "http://localhost:8080"; // need to change this 

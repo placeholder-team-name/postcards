@@ -51,6 +51,7 @@ export const Box = styled("div")(
     order,
     alignSelf,
     maxWidth,
+    height,
     themed("Box")
 );
 
@@ -63,7 +64,8 @@ Box.propTypes = {
     ...flex.propTypes,
     ...order.propTypes,
     ...alignSelf.propTypes,
-    ...maxWidth.propTypes
+    ...maxWidth.propTypes,
+    ...height.propTypes
 };
 
 export const Flex = styled(Box)(
@@ -135,12 +137,12 @@ export const Button = styled(Box)(
         display: "inline-block",
         textAlign: "center",
         lineHeight: "inherit",
-        textDecoration: "none"
+        textDecoration: "none",
+        borderRadius: "4px"
     },
     fontWeight,
     borders,
     borderColor,
-    borderRadius,
     buttonStyle,
     themed("Button")
 );
@@ -149,7 +151,6 @@ Button.propTypes = {
     ...fontWeight.propTypes,
     ...borders.propTypes,
     ...borderColor.propTypes,
-    ...borderRadius.propTypes,
     ...buttonStyle.propTypes
 };
 
@@ -162,8 +163,7 @@ Button.defaultProps = {
     py: 2,
     color: "white",
     bg: "blue",
-    border: 0,
-    borderRadius: 4
+    border: 0
 };
 
 export const Image = styled(Box)(
@@ -216,7 +216,8 @@ Card.propTypes = {
 };
 
 export const Container = styled(Box)({
-    maxWidth: "1024px"
+    maxWidth: "1024px",
+    width: "100%"
 });
 
 Container.defaultProps = {
@@ -230,10 +231,14 @@ Measure.defaultProps = {
     maxWidth: "30rem"
 };
 
-export const PageLink = styled(ReachLink)({
-    textDecoration: "none",
-    color: "inherit"
-});
+export const PageLink = styled(ReachLink)(
+    {
+        textDecoration: "none",
+        color: "inherit",
+        lineHeight: 1
+    },
+    color
+);
 
 export const Avatar = styled("img")(
     {
@@ -255,4 +260,13 @@ Avatar.propTypes = {
 Avatar.defaultProps = {
     size: 48,
     borderRadius: "50%"
+};
+
+export const ScrollView = styled(Flex)({
+    overflowY: "auto"
+});
+
+ScrollView.defaultProps = {
+    flexDirection: "column",
+    flex: 1
 };

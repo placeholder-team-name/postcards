@@ -7,7 +7,7 @@ import { EditorState, convertFromHTML, ContentState } from "draft-js";
 import { WriteComponent } from "./WriteComponent";
 import { PreviewComponent } from "./PreviewComponent";
 import LoadingSpinner from "../LoadingSpinner";
-import { Container } from "../globals";
+import { Container, ScrollView } from "../globals";
 
 const WriteAndPreviewComponent = ({ user }) => {
     const [userNotebookContent, setUserNotebookContent] = useState(
@@ -27,7 +27,10 @@ const WriteAndPreviewComponent = ({ user }) => {
             .ref(`${user.uid}/${year}/${month}`);
         notebookRef.on("value", snap => {
             const firebaseData = snap.val() || { notebookContent: "" };
-            const { notebookContent, lastEditedTime: lastEditedTimeOnFirebase } = firebaseData;
+            const {
+                notebookContent,
+                lastEditedTime: lastEditedTimeOnFirebase
+            } = firebaseData;
             // default editor state to empty
             let editorState = EditorState.createEmpty();
 
@@ -56,10 +59,17 @@ const WriteAndPreviewComponent = ({ user }) => {
         };
     }, [month, user, year]);
 
+    if (loading) {
+        return (
+            <ScrollView flex={1} justifyContent="center" alignItems="center">
+                <LoadingSpinner type="balls" />
+            </ScrollView>
+        );
+    }
+
     return (
-        <Container>
-            {loading && <LoadingSpinner />}
-            {!loading && (
+        <ScrollView>
+            <Container my={12}>
                 <Router>
                     <WriteComponent
                         path="/"
@@ -77,8 +87,8 @@ const WriteAndPreviewComponent = ({ user }) => {
                         HTMLContent={HTMLContent}
                     />
                 </Router>
-            )}
-        </Container>
+            </Container>
+        </ScrollView>
     );
 };
 

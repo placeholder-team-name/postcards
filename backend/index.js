@@ -38,8 +38,9 @@ cron.schedule("*/1 * * * *", () => {
 
                 const message = {
                     notification: {
-                        title: "Wow!",
-                        body: "Ghehhehehe"
+                        title: "Postcards App",
+                        body: "It's time to work on your postcard!"
+                        // TODO: Clickable link
                     },
                     tokens: receivers
                 };

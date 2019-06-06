@@ -1,12 +1,9 @@
 import React from "react";
-import { Router } from "@reach/router";
 
+import { ScrollView } from "./components/globals";
 import LoadingSpinner from "./components/LoadingSpinner";
-import NavBar from "./components/NavBar";
-import WriteAndPreviewComponent from "./components/WriteAndPreviewComponent";
-import LandingPage from "./pages/LandingPage";
-import SettingsPage from "./pages/SettingsPage";
-import RecipientsPage from "./pages/RecipientsPage";
+import AuthApp from "./components/AuthApp";
+import UnauthApp from "./components/UnauthApp";
 
 import useAuth from "./hooks/useAuth";
 
@@ -14,25 +11,18 @@ function App() {
     const [user, loading] = useAuth();
 
     if (loading) {
-        return <LoadingSpinner />;
+        return (
+            <ScrollView flex={1} justifyContent="center" alignItems="center">
+                <LoadingSpinner type="circle" />
+            </ScrollView>
+        );
     }
 
-    return (
-        <>
-            <NavBar user={user} />
-            {user ? (
-                <Router>
-                    <WriteAndPreviewComponent path="/*" user={user} />
-                    <SettingsPage path="/settings" user={user} />
-                    <RecipientsPage path="/recipients" user={user} />
-                </Router>
-            ) : (
-                <Router>
-                    <LandingPage path="/" />
-                </Router>
-            )}
-        </>
-    );
+    if (user) {
+        return <AuthApp user={user} />;
+    }
+
+    return <UnauthApp />;
 }
 
 export default App;

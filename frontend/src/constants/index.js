@@ -30,12 +30,35 @@ export const Prompts = {
     /** June */
     5: {
         1: "Happy June! Summer is starting! How do you feel about that?",
-        DEFAULT: ""
+        DEFAULT: "How has it been going?"
     },
     /** July */
     6: {
-        4: "Happy Independence Day! How are you spending the Fourth of July?",
-        DEFAULT: ""
+        4: "Happy Independence Day! What did you do to celebrate?",
+        DEFAULT: "Happy summer! What have you been up to?"
+    },
+    /** August */
+    7: {
+        DEFAULT: "Summer is ending soon! How do you feel?"
+    },
+    /** September */
+    8: {
+        DEFAULT: "How have you been?"
+    },
+    /** October */
+    9: {
+        DEFAULT: "It's starting to get chilly out! What have you been up to?",
+        31: "Happy Halloween! What kind of candy did you have today?"
+    },
+    /** November */
+    10: {
+        DEFAULT: "How has your schedule been?",
+        25: "It's around that time of year! What are you thankful for?"
+    },
+    /** December */
+    11: {
+        25: "Merry Christmas! If you did, how did you celebrate?",
+        DEFAULT: "What are you looking forward to?"
     }
 };
 

@@ -1,10 +1,30 @@
 import React from "react";
-import Spinner from "react-loader-spinner";
+import "loaders.css/loaders.min.css";
 
-const LoadingSpinner = () => (
-    <div>
-        <Spinner type="Oval" color="#eeeeee" height="100" width="100" />
-    </div>
-);
+import ColoredCircle from "./ColoredCircle";
+import Ball from "./Ball";
+
+const LoadingSpinner = ({ type }) => {
+    switch (type) {
+        case "circle":
+            return (
+                <div className="loader">
+                    <div className="loader-inner ball-clip-rotate">
+                        <ColoredCircle />
+                    </div>
+                </div>
+            );
+        case "balls":
+            return (
+                <div className="loader">
+                    <div className="ball-pulse">
+                        <Ball />
+                        <Ball />
+                        <Ball />
+                    </div>
+                </div>
+            );
+    }
+};
 
 export default LoadingSpinner;

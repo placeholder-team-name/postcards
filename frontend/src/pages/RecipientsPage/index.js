@@ -1,26 +1,79 @@
-import React, { useEffect, useState } from "react";
-import { Container } from "../../components/globals";
-import { db } from "../../firebase";
+import React from "react";
+
+import {
+    Container,
+    Box,
+    Button,
+    PageLink,
+    Heading,
+    Flex,
+    ScrollView
+} from "../../components/globals";
+import Icon from "../../components/Icon";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import useRecipients from "../../hooks/useRecipients";
 
 const RecipientsPage = ({ user }) => {
-    const [recipients, setRecipients] = useState([]);
+    const [recipients, loading] = useRecipients(user);
 
-    useEffect(() => {
-        db.ref(`contacts/${user.uid}`)
-            .once("value")
-            .then(function(snapshot) {
-                if (snapshot.val()) {
-                    // TODO: Set recipients
-                }
-            });
-    }, [user.uid]);
+    if (loading) {
+        return (
+            <ScrollView flex={1} justifyContent="center" alignItems="center">
+                <LoadingSpinner type="balls" />
+            </ScrollView>
+        );
+    }
 
-    // TODO: Add proper empty state
+    if (recipients.length === 0) {
+        // TODO: Polish empty state
+        return (
+            <ScrollView>
+                <Container>
+                    <Heading as="h1" fontSize={5} mt={12}>
+                        No Recipients
+                    </Heading>
+                    <Button to="/recipients/new" as={PageLink} mt={4}>
+                        Add recipient
+                    </Button>
+                </Container>
+            </ScrollView>
+        );
+    }
+
     return (
-        <Container>
-            <p>I'm a recipients page</p>
-            {recipients.length > 0 ? <p>Contacts</p> : <p>No recipients</p>}
-        </Container>
+        <ScrollView>
+            <Container my={12}>
+                <Heading as="h1" fontSize={5} mt={0}>
+                    Recipients
+                </Heading>
+                <Button to="/recipients/new" as={PageLink} mt={4}>
+                    Add recipient
+                </Button>
+                <Box mt={8}>
+                    {recipients.map((recipient, i) => {
+                        const { id, firstName, lastName, email } = recipient;
+                        return (
+                            <PageLink key={id} to={id}>
+                                <Flex
+                                    justifyContent="space-between"
+                                    alignItems="center"
+                                    py={4}
+                                >
+                                    <div>
+                                        <div>
+                                            {`${firstName} ${lastName}`.trim()}
+                                        </div>
+                                        <div>{`${email}`}</div>
+                                    </div>
+
+                                    <Icon glyph="chevron-right" size={24} />
+                                </Flex>
+                            </PageLink>
+                        );
+                    })}
+                </Box>
+            </Container>
+        </ScrollView>
     );
 };
 

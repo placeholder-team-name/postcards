@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 
 import {
@@ -14,12 +14,15 @@ import validationSchema from "../../helpers/recipients/validationSchema";
 
 const RecipientsDetailPage = ({ user, recipientID }) => {
     const [isEditing, setIsEditing] = useState(false);
-    // TODO: Rerun this every time isEditing changes
-    const [recipientsDetail, loading] = useRecipientsDetail(
-        user,
-        recipientID,
-        isEditing
-    );
+    const {
+        loading,
+        recipientsDetail,
+        fetchRecipientsDetail
+    } = useRecipientsDetail(user);
+
+    useEffect(() => {
+        fetchRecipientsDetail(recipientID);
+    }, [isEditing, recipientID]);
 
     // TODO: Make sure users can only access their own recipients
     if (loading) {

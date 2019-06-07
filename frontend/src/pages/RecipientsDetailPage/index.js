@@ -23,7 +23,7 @@ const RecipientsDetailPage = ({ user, recipientID }) => {
 
     useEffect(() => {
         fetchRecipientsDetail(recipientID);
-    }, [isEditing, recipientID]);
+    }, [isEditing, recipientID, fetchRecipientsDetail]);
 
     async function handleSubmit(values, actions) {
         // TODO: There might be an opportunity here to share

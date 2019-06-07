@@ -24,6 +24,16 @@ const LoadingSpinner = ({ type }) => {
                     </div>
                 </div>
             );
+        default:
+            return (
+                <div className="loader">
+                    <div className="ball-pulse">
+                        <Ball />
+                        <Ball />
+                        <Ball />
+                    </div>
+                </div>
+            );
     }
 };
 

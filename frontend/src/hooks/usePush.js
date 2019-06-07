@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { messaging, db } from "../firebase";
 
 const PERMISSION_GRANTED = "granted";
@@ -16,38 +16,61 @@ function usePush(user) {
     // can still be false while isPushEnabled is already true.
     const [isAllowedByBrowser, setisAllowedByBrowser] = useState(false);
 
-    useEffect(() => {
-        // Check if push notifications are currently enabled
-        updateIsPushEnabled();
 
-        // Callback fired if token is updated
-        return messaging.onTokenRefresh(() => {
-            messaging
-                .getToken()
-                .then(refreshedToken => {
-                    // The downside of this approach is that
-                    // we re-enable the user's in-app push notification
-                    // preferences when their token gets refreshed
-                    enableToken(refreshedToken)
-                        .then(() => {
-                            setIsPushEnabled(true);
-                        })
-                        .catch(() => {
-                            setIsPushEnabled(false);
-                        });
-                })
-                .catch(err => {
-                    console.log("Unable to retrieve refreshed token. ", err);
-                    // TODO: It might be too extreme to switch push notifications
-                    // off if this API call has only failed one time
-                    setIsPushEnabled(false);
-                });
-            // https://github.com/mozilla/webextension-polyfill/issues/130
-            return true;
-        });
-    }, []);
 
-    function enablePush(override = true) {
+    const tokenExists = useCallback((token) => {
+        return db
+            .ref(`push-notification-tokens/${user.uid}/${token}`)
+            .once("value")
+            .then(snap => {
+                if (snap && snap.val() !== null) {
+                    return true;
+                }
+                return false;
+            })
+            .catch(() => {
+                return false;
+            });
+    }, [user]);
+
+    const tokenIsEnabled = useCallback((token) => {
+        return db
+            .ref(`push-notification-tokens/${user.uid}/${token}`)
+            .once("value")
+            .then(snap => {
+                return snap ? snap.val() : false;
+            })
+            .catch(() => {
+                return false;
+            });
+    }, [user]);
+
+    // TODO: Include catch statement
+    const enableToken = useCallback((token) => {
+        return db
+            .ref(`push-notification-tokens/${user.uid}`)
+            .once("value")
+            .then(snap => {
+                let tokens = {};
+
+                if (snap) {
+                    tokens = {
+                        ...snap.val(),
+                        [token]: true
+                    };
+                } else {
+                    tokens = {
+                        [token]: true
+                    };
+                }
+
+                return db
+                    .ref(`push-notification-tokens/${user.uid}`)
+                    .set(tokens);
+            });
+    }, [user]);
+
+    const enablePush = useCallback((override = true) => {
         Notification.requestPermission().then(permission => {
             if (permission === PERMISSION_GRANTED) {
                 setisAllowedByBrowser(true);
@@ -91,7 +114,7 @@ function usePush(user) {
                 setIsPushEnabled(false);
             }
         });
-    }
+    }, [enableToken, tokenExists]);
 
     function disablePush() {
         messaging
@@ -124,7 +147,7 @@ function usePush(user) {
             });
     }
 
-    function updateIsPushEnabled() {
+    const updateIsPushEnabled = useCallback(() => {
         messaging
             .getToken()
             .then(currentToken => {
@@ -145,35 +168,11 @@ function usePush(user) {
                 console.log("An error occurred while retrieving token. ", err);
                 setIsPushEnabled(false);
             });
-    }
+    }, [tokenIsEnabled]);
+
 
     // TODO: Include catch statement
-    function enableToken(token) {
-        return db
-            .ref(`push-notification-tokens/${user.uid}`)
-            .once("value")
-            .then(snap => {
-                let tokens = {};
-
-                if (snap) {
-                    tokens = {
-                        ...snap.val(),
-                        [token]: true
-                    };
-                } else {
-                    tokens = {
-                        [token]: true
-                    };
-                }
-
-                return db
-                    .ref(`push-notification-tokens/${user.uid}`)
-                    .set(tokens);
-            });
-    }
-
-    // TODO: Include catch statement
-    function disableToken(token) {
+    const disableToken = useCallback((token) => {
         return db
             .ref(`push-notification-tokens/${user.uid}`)
             .once("value")
@@ -195,34 +194,39 @@ function usePush(user) {
                     .ref(`push-notification-tokens/${user.uid}`)
                     .set(tokens);
             });
-    }
+    }, [user]);
 
-    function tokenExists(token) {
-        return db
-            .ref(`push-notification-tokens/${user.uid}/${token}`)
-            .once("value")
-            .then(snap => {
-                if (snap && snap.val() !== null) {
-                    return true;
-                }
-                return false;
-            })
-            .catch(() => {
-                return false;
-            });
-    }
+    useEffect(() => {
+        // Check if push notifications are currently enabled
+        updateIsPushEnabled();
 
-    function tokenIsEnabled(token) {
-        return db
-            .ref(`push-notification-tokens/${user.uid}/${token}`)
-            .once("value")
-            .then(snap => {
-                return snap ? snap.val() : false;
-            })
-            .catch(() => {
-                return false;
-            });
-    }
+        // Callback fired if token is updated
+        return messaging.onTokenRefresh(() => {
+            messaging
+                .getToken()
+                .then(refreshedToken => {
+                    // The downside of this approach is that
+                    // we re-enable the user's in-app push notification
+                    // preferences when their token gets refreshed
+                    enableToken(refreshedToken)
+                        .then(() => {
+                            setIsPushEnabled(true);
+                        })
+                        .catch(() => {
+                            setIsPushEnabled(false);
+                        });
+                })
+                .catch(err => {
+                    console.log("Unable to retrieve refreshed token. ", err);
+                    // TODO: It might be too extreme to switch push notifications
+                    // off if this API call has only failed one time
+                    setIsPushEnabled(false);
+                });
+            // https://github.com/mozilla/webextension-polyfill/issues/130
+            return true;
+        });
+    }, [enablePush, enableToken, updateIsPushEnabled]);
+
 
     return {
         isPushEnabled,

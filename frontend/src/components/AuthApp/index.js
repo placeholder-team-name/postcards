@@ -21,7 +21,7 @@ function AuthApp({ user }) {
 
     useEffect(() => {
         enablePush(false);
-    }, []);
+    }, [enablePush]);
 
     return (
         <>

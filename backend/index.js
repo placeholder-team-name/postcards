@@ -4,6 +4,8 @@ const admin = require("firebase-admin");
 const cron = require("node-cron");
 const sgMail = require("@sendgrid/mail");
 const serviceAccount = require("./serviceAccountKey.json");
+const fs = require('fs');
+const https = require('https');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 

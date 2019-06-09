@@ -114,4 +114,16 @@ app.post("/SendEmail", function(req, res) {
         });
 });
 
-app.listen(3000, () => console.log("postcards app listening on port 3000."));
+try {
+    const options = {
+        cert: fs.readFileSync(process.env.TLS_CERT),
+        key: fs.readFileSync(process.env.TLS_KEY)
+    };
+    
+    app.listen(8080, () =>
+        console.log("Express is listening on port 8080")
+    );
+    https.createServer(options, app).listen(443);
+} catch (err) {
+    console.error(err);
+}

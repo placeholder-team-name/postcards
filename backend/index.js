@@ -19,6 +19,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.options('*', cors());
 // TODO: Change this from once every minute to something
 // more realistic
 cron.schedule("30 19 * * *", () => {
@@ -74,6 +75,8 @@ app.post("/SendEmail", function(req, res) {
             message: "Request body cannot be empty"
         });
     }
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     let recipients = req.body.recipients;
     let user = req.body.user;
 

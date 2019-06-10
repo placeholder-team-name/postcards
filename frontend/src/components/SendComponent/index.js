@@ -41,8 +41,12 @@ export const SendComponent = ({
                         setErrorSending(response.messsge);
                     }
                 }).catch(err => {
+                    setErrorSending(err.message);
                     throw err;
                 });
+            }).catch(err => {
+                setErrorSending(err.message);
+                throw err;
             });
         } catch (e) {
             setErrorSending(e.message);

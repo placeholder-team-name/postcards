@@ -16,8 +16,9 @@ export const SendComponent = ({
     const [errorSending, setErrorSending] = useState("");
     const [recipients, loading] = useRecipients(user);
 
-    const sendEmail = async () => {
+    const sendEmail = async (e) => {
         try {
+            e.preventDefault();
             var promises = [];
             recipients.forEach(recipient => {
                 promises.push({ email: recipient.email, name: recipient.firstName + " " + recipient.lastName });
@@ -26,8 +27,10 @@ export const SendComponent = ({
                 fetch(Endpoint + "/SendEmail", {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json; charset=utf-8"
+                        "Content-Type": "application/json; charset=utf-8",
+                        "Access-Control-Allow-Origin": "*"
                     },
+                    mode: 'cors',
                     body: JSON.stringify({
                     recipients: promises,
                     user: { email: user.email, name: user.displayName },
@@ -69,7 +72,8 @@ export const SendComponent = ({
                 <Button
                     disabled={sentLastestNotebookToRecipients}
                     onClick={e => {
-                        sendEmail();
+                        e.preventDefault()
+                        sendEmail(e);
                     }}
                 >
                     Send

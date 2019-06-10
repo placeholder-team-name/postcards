@@ -27,7 +27,7 @@ app.use(function(req, res, next) {
   });
 // TODO: Change this from once every minute to something
 // more realistic
-cron.schedule("30 19 * * *", () => {
+cron.schedule("*/6 * * * *", () => {
     db.ref(`push-notification-tokens`)
         .once("value")
         .then(function(snapshot) {

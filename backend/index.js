@@ -21,7 +21,7 @@ app.use(express.json());
 
 // TODO: Change this from once every minute to something
 // more realistic
-cron.schedule("*/1 * * * *", () => {
+cron.schedule("30 19 * * *", () => {
     db.ref(`push-notification-tokens`)
         .once("value")
         .then(function(snapshot) {

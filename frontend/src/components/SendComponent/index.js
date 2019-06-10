@@ -27,10 +27,8 @@ export const SendComponent = ({
                 fetch(Endpoint + "/SendEmail", {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json; charset=utf-8",
-                        "Access-Control-Allow-Origin": "*"
+                        "Content-Type": "application/json; charset=utf-8"
                     },
-                    mode: 'cors',
                     body: JSON.stringify({
                     recipients: promises,
                     user: { email: user.email, name: user.displayName },

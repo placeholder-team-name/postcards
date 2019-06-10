@@ -32,10 +32,9 @@ const LandingPage = () => {
                 </Heading>
                 <Measure mt={6}>
                     <Text>
-                        Aenean quis lacinia tellus. Nulla bibendum est eu tortor
-                        tempus ultricies quis ac turpis. Etiam lorem magna,
-                        sodales in condimentum quis, dignissim sit amet urna.
-                        Nunc quis tristique augue.
+                        Write your postcard now. The writing process is easy and fun.
+                        We'll help extend the information you want to share 
+                        to your family members and friends.
                     </Text>
                 </Measure>
                 <Measure mt={6}>

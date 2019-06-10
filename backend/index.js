@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require("cors");
+//const cors = require("cors");
 const admin = require("firebase-admin");
 const cron = require("node-cron");
 const sgMail = require("@sendgrid/mail");
@@ -16,10 +16,15 @@ admin.initializeApp({
 const db = admin.database();
 const app = express();
 
-app.use(cors());
+//pp.use(cors());
 app.use(express.json());
 
-app.options('*', cors());
+//app.options('/SendEmail', cors());
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 // TODO: Change this from once every minute to something
 // more realistic
 cron.schedule("30 19 * * *", () => {
@@ -132,3 +137,7 @@ try {
 } catch (err) {
     console.error(err);
 }
+
+// app.listen(8080, () =>
+//         console.log("Express is listening on port 8080")
+//     );

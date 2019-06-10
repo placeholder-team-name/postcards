@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Button, Text } from "../globals";
-import { Endpoint } from '../../constants';
+import { Button, Text, Image } from "../globals";
+import { Endpoint, CheckIcon } from '../../constants';
 import ErrorContent from "../ErrorContent";
+
+import useRecipients from "../../hooks/useRecipients";
 
 export const SendComponent = ({ 
     user, 
@@ -12,31 +14,35 @@ export const SendComponent = ({
         false
     );
     const [errorSending, setErrorSending] = useState("");
+    const [recipients, loading] = useRecipients(user);
 
     const sendEmail = async () => {
         try {
-            fetch(Endpoint + "/SendEmail", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8"
-                },
-                body: JSON.stringify({
-                recipients: [
-                    // we need to get props passed in 
-                    { email:"clairekpromo@gmail.com", name: "Claire Kim" }
-                ],
-                user: { email: user.email, name: user.displayName },
-                html: HTMLContent
-                })
-            }).then(res => {
-                if (res.ok) {
-                    setSentLastestNotebookToRecipients(true);
-                } else {
-                    let response = res.json();
-                    setErrorSending(response.messsge);
-                }
-            }).catch(err => {
-                throw err;
+            var promises = [];
+            recipients.forEach(recipient => {
+                promises.push({ email: recipient.email, name: recipient.firstName + " " + recipient.lastName });
+            });
+            Promise.all(promises).then(() => {
+                fetch(Endpoint + "/SendEmail", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8"
+                    },
+                    body: JSON.stringify({
+                    recipients: promises,
+                    user: { email: user.email, name: user.displayName },
+                    html: HTMLContent
+                    })
+                }).then(res => {
+                    if (res.ok) {
+                        setSentLastestNotebookToRecipients(true);
+                    } else {
+                        let response = res.json();
+                        setErrorSending(response.messsge);
+                    }
+                }).catch(err => {
+                    throw err;
+                });
             });
         } catch (e) {
             setErrorSending(e.message);
@@ -45,16 +51,27 @@ export const SendComponent = ({
 
     return (
         <>
-             <Button
-                disabled={sentLastestNotebookToRecipients}
-                onClick={e => {
-                    sendEmail();
-                }}
-            >
-                Send
-            </Button>
+            {sentLastestNotebookToRecipients ? (
+                <>
+                <Text> 
+                    <Image 
+                    src={CheckIcon}
+                    width="25px" 
+                    />
+                    Sent! 
+                </Text>
+                </>
+            ) : (
+                <Button
+                    disabled={sentLastestNotebookToRecipients}
+                    onClick={e => {
+                        sendEmail();
+                    }}
+                >
+                    Send
+                </Button>
+            )}
             <ErrorContent errorMessage={errorSending} />
-            {sentLastestNotebookToRecipients && <Text> Sent! </Text> }
         </>
     );
 };

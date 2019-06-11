@@ -36,7 +36,8 @@ export const WriteComponent = ({
             let lastEditedTime = firebase.database.ServerValue.TIMESTAMP;
             const valueToSet = {
                 notebookContent: convertedToHtml,
-                lastEditedTime
+                lastEditedTime,
+                styles: userNotebookContent.getCurrentInlineStyle()
             }
             await notebookRef.set(valueToSet);
             setErrorSaving("");
@@ -62,6 +63,20 @@ export const WriteComponent = ({
                     setUserNotebookContent(e);
                 }}
                 toolbar={{
+                    options: [
+                        "inline",
+                        "blockType",
+                        "fontSize",
+                        "list",
+                        "textAlign",
+                        "colorPicker",
+                        "link",
+                        "embedded",
+                        "emoji",
+                        "image",
+                        "remove",
+                        "history"
+                    ],
                     image: {
                         previewImage: true,
                         uploadCallback: async file => {
@@ -86,6 +101,7 @@ export const WriteComponent = ({
                             }
                         }
                     }
+
                 }}
             />
             <Button

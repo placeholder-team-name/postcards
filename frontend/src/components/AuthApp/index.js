@@ -8,6 +8,7 @@ import SettingsPage from "../../pages/SettingsPage";
 import RecipientsPage from "../../pages/RecipientsPage";
 import RecipientsNewPage from "../../pages/RecipientsNewPage";
 import RecipientsDetailPage from "../../pages/RecipientsDetailPage";
+import SentPage from "../../pages/SentPage";
 
 import usePush from "../../hooks/usePush";
 
@@ -52,6 +53,7 @@ function AuthApp({ user }) {
                     path="/recipients/:recipientID"
                     user={user}
                 />
+                <SentPage path="/sent" />
             </MainRouter>
         </>
     );

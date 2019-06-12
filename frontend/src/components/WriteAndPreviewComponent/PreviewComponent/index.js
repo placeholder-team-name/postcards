@@ -1,22 +1,24 @@
 import React from "react";
 import { Link } from "@reach/router";
-import { Button, Flex } from "../../globals";
+import { Button, Flex, Container } from "../../globals";
 import { SendComponent } from "../../SendComponent";
 
 export const PreviewComponent = ({ HTMLContent, user }) => {
     return (
         <>
+            <Container mt={4}></Container>
             <Link to="/">
                 <Button>Write</Button>
             </Link>
-            <Flex>
-            <div dangerouslySetInnerHTML={{ __html: HTMLContent }} />
-            </Flex>
+            <Container mt={6}>
+                <div dangerouslySetInnerHTML={{ __html: HTMLContent }} />
+            </Container>
+            <Container mt={4}></Container>
             <Flex flexWrap="wrap">
-            <SendComponent
-                user={user}
-                HTMLContent={HTMLContent}
-            />
+                <SendComponent
+                    user={user}
+                    HTMLContent={HTMLContent}
+                />
             </Flex>
         </>
     );

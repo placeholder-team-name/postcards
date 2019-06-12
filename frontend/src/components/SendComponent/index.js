@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Button, Text, Image } from "../globals";
-import { Endpoint, CheckIcon } from '../../constants';
+import { Button, Text } from "../globals";
+import { Endpoint } from '../../constants';
 import ErrorContent from "../ErrorContent";
-
+import SentPage from "../../pages/SentPage";
 import useRecipients from "../../hooks/useRecipients";
+import MainRouter from "../MainRouter";
+import { Redirect } from "@reach/router";
 
 export const SendComponent = ({ 
     user, 
@@ -14,11 +16,13 @@ export const SendComponent = ({
         false
     );
     const [errorSending, setErrorSending] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const [recipients, loading] = useRecipients(user);
 
     const sendEmail = async (e) => {
         try {
             e.preventDefault();
+            setIsLoading(true);
             var promises = [];
             recipients.forEach(recipient => {
                 promises.push({ email: recipient.email, name: recipient.firstName + " " + recipient.lastName });
@@ -39,13 +43,16 @@ export const SendComponent = ({
                         setSentLastestNotebookToRecipients(true);
                     } else {
                         let response = res.json();
+                        setIsLoading(false);
                         setErrorSending(response.messsge);
                     }
                 }).catch(err => {
+                    setIsLoading(false);
                     setErrorSending(err.message);
                     throw err;
                 });
             }).catch(err => {
+                setIsLoading(false);
                 setErrorSending(err.message);
                 throw err;
             });
@@ -56,28 +63,22 @@ export const SendComponent = ({
 
     return (
         <>
-            {sentLastestNotebookToRecipients ? (
-                <>
-                <Text> 
-                    <Image 
-                    src={CheckIcon}
-                    width="25px" 
-                    />
-                    Sent! 
-                </Text>
-                </>
+            { isLoading ? (
+            <Text>Sending...</Text>
             ) : (
-                <Button
-                    disabled={sentLastestNotebookToRecipients}
-                    onClick={e => {
-                        e.preventDefault()
-                        sendEmail(e);
-                    }}
-                >
-                    Send
-                </Button>
-            )}
+            <Button
+                disabled={sentLastestNotebookToRecipients}
+                onClick={e => {
+                    e.preventDefault()
+                    sendEmail(e);
+                }}
+            >
+                Send
+            </Button>
+            )} 
+            
             <ErrorContent errorMessage={errorSending} />
+            { sentLastestNotebookToRecipients ? <Redirect to="/sent" noThrow /> : undefined }
         </>
     );
 };

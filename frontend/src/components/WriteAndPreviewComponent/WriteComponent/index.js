@@ -3,8 +3,7 @@ import draftToHtml from "draftjs-to-html";
 import { convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import "./index.css";
-import { Button } from "../../globals";
+import { Button, Container } from "../../globals";
 import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/storage";
@@ -53,6 +52,7 @@ export const WriteComponent = ({
             <Link to="/preview">
                 <Button>Preview</Button>
             </Link>
+            <Container mt={4}></Container>
             {(!lastEditedTime || (lastEditedTime.getDate() !== currentTime.getDate())) && <WritePrompt currentTime={currentTime} year={year} month={month} />}
             <Editor
                 editorState={userNotebookContent}
@@ -104,6 +104,7 @@ export const WriteComponent = ({
 
                 }}
             />
+            <Container mt={6}></Container>
             <Button
                 disabled={savedLatestDataToFirebase}
                 onClick={e => {

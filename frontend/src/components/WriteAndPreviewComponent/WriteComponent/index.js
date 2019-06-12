@@ -3,7 +3,7 @@ import draftToHtml from "draftjs-to-html";
 import { convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Button, Container } from "../../globals";
+import { Button, Container, Text } from "../../globals";
 import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/storage";
@@ -23,10 +23,12 @@ export const WriteComponent = ({
     const [savedLatestDataToFirebase, setSavedLatestDataToFirebase] = useState(
         true
     );
+    const [isSaving, setIsSaving] = useState(false);
     const [errorSaving, setErrorSaving] = useState("");
 
     const sendUserNotebookContentToFirebase = async () => {
         try {
+            setIsSaving(true);
             let convertedToHtml = draftToHtml(
                 convertToRaw(userNotebookContent.getCurrentContent())
             );
@@ -38,10 +40,13 @@ export const WriteComponent = ({
                 notebookContent: convertedToHtml,
                 lastEditedTime
             }
-            await notebookRef.set(valueToSet);
+            await notebookRef.set(valueToSet).then(() => {
+                setIsSaving(false);
+            });
             setErrorSaving("");
             setSavedLatestDataToFirebase(true);
         } catch (e) {
+            setIsSaving(false);
             setErrorSaving(e.message);
         }
     };
@@ -50,7 +55,10 @@ export const WriteComponent = ({
         <>
             <ErrorContent errorMessage={errorSaving} />
             <Link to="/preview">
-                <Button>Preview</Button>
+                <Button
+                    disabled={isSaving}>
+                    Preview
+                </Button>
             </Link>
             <Container mt={4}></Container>
             {(!lastEditedTime || (lastEditedTime.getDate() !== currentTime.getDate())) && <WritePrompt currentTime={currentTime} year={year} month={month} />}
@@ -111,8 +119,9 @@ export const WriteComponent = ({
                     sendUserNotebookContentToFirebase();
                 }}
             >
-                Save
+                {isSaving ? "Saving..." : "Save" }
             </Button>
+            
         </>
     );
 };

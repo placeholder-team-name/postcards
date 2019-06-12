@@ -29,7 +29,7 @@ function UnauthApp() {
             <NavBar>{renderLoginButton()}</NavBar>
             <MainRouter>
                 <LandingPage path="/" />
-                <LoginPage path="/login" />
+                <LoginPage path="/login" default/>
             </MainRouter>
         </>
     );

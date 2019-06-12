@@ -6,7 +6,8 @@ import {
     Container,
     Button,
     Heading,
-    ScrollView
+    ScrollView,
+    Text
 } from "../../components/globals";
 
 const SettingsPage = ({
@@ -45,8 +46,10 @@ const SettingsPage = ({
         return (
             <div>
                 <Button disabled>Enable Push Notifications</Button>
-                Please enable push notifications in your browser and refresh
-                this page.
+                <Text>
+                    Please enable push notifications in your browser and refresh
+                    this page.
+                </Text>
             </div>
         );
     }
@@ -58,6 +61,7 @@ const SettingsPage = ({
                     Settings
                 </Heading>
                 {renderPushPermissions()}
+                <Container mt={4}></Container>
                 <div>
                     <Button onClick={handleSignOut}>Sign out</Button>
                 </div>

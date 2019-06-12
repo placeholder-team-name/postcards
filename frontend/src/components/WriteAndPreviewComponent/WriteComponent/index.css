@@ -1,3 +1,5 @@
 .rdw-editor-main {
-    border: 1px solid black;
+    border-left: 0.5px solid lightgray;
+    border-right: 0.5px solid lightgray;
+    border-bottom: 0.5px solid lightgray;
 }

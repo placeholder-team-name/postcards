@@ -11,9 +11,9 @@ export const PreviewComponent = ({ HTMLContent, user }) => {
             <Link to="/">
                 <Button>Write</Button>
             </Link>
-            <Container mt={6}>
+            <Flex >
                 <div dangerouslySetInnerHTML={{ __html: HTMLContent }} />
-            </Container>
+            </Flex>
             <Container mt={4}></Container>
             <Flex flexWrap="wrap">
                 <SendComponent

@@ -7,6 +7,7 @@ import { Button, Container, Text } from "../../globals";
 import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/storage";
+import "./index.css";
 import ErrorContent from "../../ErrorContent";
 import WritePrompt from "../WritePrompt";
 import { Link } from "@reach/router";

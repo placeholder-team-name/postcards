@@ -4,6 +4,7 @@ import { Button, Flex, Container } from "../../globals";
 import { SendComponent } from "../../SendComponent";
 
 export const PreviewComponent = ({ HTMLContent, user }) => {
+    console.log(HTMLContent);
     return (
         <>
             <Container mt={4}></Container>

@@ -15,7 +15,7 @@ function UnauthApp() {
                     if (location.pathname !== "/login") {
                         return (
                             <Button as={Link} to="/login">
-                                Log in or sign up
+                                Log in with Google
                             </Button>
                         );
                     }
@@ -28,8 +28,8 @@ function UnauthApp() {
         <>
             <NavBar>{renderLoginButton()}</NavBar>
             <MainRouter>
-                <LandingPage path="/" />
                 <LoginPage path="/login" />
+                <LandingPage path="/" default />
             </MainRouter>
         </>
     );

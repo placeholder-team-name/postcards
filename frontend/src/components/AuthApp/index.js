@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import WriteAndPreviewComponent from "../WriteAndPreviewComponent";
-import { Flex, Text, PageLink, Avatar } from "../globals";
+import { Flex, Text, PageLink, Avatar, Button } from "../globals";
 import MainRouter from "../MainRouter";
 import NavBar from "../NavBar";
 import SettingsPage from "../../pages/SettingsPage";
@@ -28,10 +28,10 @@ function AuthApp({ user }) {
         <>
             <NavBar>
                 <Flex alignItems="center">
-                    <PageLink to="/recipients">
+                    <Button as={PageLink} to="/recipients">
                         <Text lineHeight="1">Recipients</Text>
-                    </PageLink>
-
+                    </Button>
+                    <div style={{ marginLeft: 10 }}></div>
                     <PageLink to="/settings">
                         <Avatar src={user.photoURL} size={32} />
                     </PageLink>

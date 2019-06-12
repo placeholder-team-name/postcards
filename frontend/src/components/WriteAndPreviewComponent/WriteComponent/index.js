@@ -63,6 +63,20 @@ export const WriteComponent = ({
                     setUserNotebookContent(e);
                 }}
                 toolbar={{
+                    options: [
+                        "inline",
+                        "blockType",
+                        "fontSize",
+                        "list",
+                        "textAlign",
+                        "colorPicker",
+                        "link",
+                        "embedded",
+                        "emoji",
+                        "image",
+                        "remove",
+                        "history"
+                    ],
                     image: {
                         previewImage: true,
                         uploadCallback: async file => {
@@ -87,6 +101,7 @@ export const WriteComponent = ({
                             }
                         }
                     }
+
                 }}
             />
             <Container mt={6}></Container>

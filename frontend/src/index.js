@@ -14,7 +14,6 @@ const GlobalStyle = createGlobalStyle`
         border: 0;
         box-sizing: inherit;
         -webkit-font-smoothing: auto;
-        font-weight: inherit;
         margin: 0;
         outline: 0;
         padding: 0;
@@ -45,6 +44,10 @@ const GlobalStyle = createGlobalStyle`
         display: flex;
         flex-direction: column;
         overflow: hidden;
+    }
+
+    input {
+        border: 1px solid gray;
     }
 `;
 

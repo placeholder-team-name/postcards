@@ -72,6 +72,9 @@ const RecipientsPage = ({ user }) => {
                         );
                     })}
                 </Box>
+                <Button to="/" as={PageLink} mt={4}>
+                    Go back
+                </Button>
             </Container>
         </ScrollView>
     );

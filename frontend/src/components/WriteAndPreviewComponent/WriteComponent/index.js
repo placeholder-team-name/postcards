@@ -36,8 +36,7 @@ export const WriteComponent = ({
             let lastEditedTime = firebase.database.ServerValue.TIMESTAMP;
             const valueToSet = {
                 notebookContent: convertedToHtml,
-                lastEditedTime,
-                styles: userNotebookContent.getCurrentInlineStyle()
+                lastEditedTime
             }
             await notebookRef.set(valueToSet);
             setErrorSaving("");
@@ -76,7 +75,7 @@ export const WriteComponent = ({
                         "image",
                         "remove",
                         "history"
-                    ],
+                      ],
                     image: {
                         previewImage: true,
                         uploadCallback: async file => {

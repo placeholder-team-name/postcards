@@ -3,6 +3,7 @@ import draftToHtml from "draftjs-to-html";
 import { convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import "./index.css";
 import { Button } from "../../globals";
 import firebase from "firebase/app";
 import "firebase/database";
@@ -75,7 +76,7 @@ export const WriteComponent = ({
                         "image",
                         "remove",
                         "history"
-                      ],
+                    ],
                     image: {
                         previewImage: true,
                         uploadCallback: async file => {

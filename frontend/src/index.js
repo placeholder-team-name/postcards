@@ -45,6 +45,10 @@ const GlobalStyle = createGlobalStyle`
         flex-direction: column;
         overflow: hidden;
     }
+
+    input {
+        border: 1px solid gray;
+    }
 `;
 
 ReactDOM.render(

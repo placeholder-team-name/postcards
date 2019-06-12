@@ -12,6 +12,7 @@ import useRecipientsDetail from "../../hooks/useRecipientsDetail";
 import validationSchema from "../../helpers/recipients/validationSchema";
 import hasUniqueEmail from "../../helpers/recipients/hasUniqueEmail";
 import { db } from "../../firebase";
+import { Link } from "@reach/router";
 
 const RecipientsDetailPage = ({ user, recipientID }) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -148,6 +149,7 @@ const RecipientsDetailPage = ({ user, recipientID }) => {
                             </Form>
                         )}
                     </Formik>
+                    <Link to="/recipients"><Button>Go back</Button></Link>
                 </Container>
             </ScrollView>
         );
